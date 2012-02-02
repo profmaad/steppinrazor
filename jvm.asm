@@ -10,11 +10,11 @@ opcodes:
 	dq opcode_impl.iconst_3
 	dq opcode_impl.iconst_4
 	dq opcode_impl.iconst_5
-	dq run_method.loop
-	dq run_method.loop
-	dq run_method.loop
-	dq run_method.loop
-	dq run_method.loop
+	dq opcode_impl.lconst_0
+	dq opcode_impl.lconst_1
+	dq opcode_impl.fconst_0
+	dq opcode_impl.fconst_1
+	dq opcode_impl.fconst_2
 	dq run_method.loop
 	dq run_method.loop
 	dq opcode_impl.bipush
@@ -31,10 +31,10 @@ opcodes:
 	dq opcode_impl.load_1
 	dq opcode_impl.load_2
 	dq opcode_impl.load_3
-	dq run_method.loop
-	dq run_method.loop
-	dq run_method.loop
-	dq run_method.loop
+	dq opcode_impl.wload_0
+	dq opcode_impl.wload_1
+	dq opcode_impl.wload_2
+	dq opcode_impl.wload_3
 	dq run_method.loop
 	dq run_method.loop
 	dq run_method.loop
@@ -64,10 +64,10 @@ opcodes:
 	dq opcode_impl.store_1
 	dq opcode_impl.store_2
 	dq opcode_impl.store_3
-	dq run_method.loop
-	dq run_method.loop
-	dq run_method.loop
-	dq run_method.loop
+	dq opcode_impl.wstore_0
+	dq opcode_impl.wstore_1
+	dq opcode_impl.wstore_2
+	dq opcode_impl.wstore_3
 	dq run_method.loop
 	dq run_method.loop
 	dq run_method.loop
@@ -174,8 +174,8 @@ opcodes:
 	dq run_method.loop
 	dq run_method.loop
 	dq opcode_impl.ireturn
-	dq run_method.loop
-	dq run_method.loop
+	dq opcode_impl.lreturn
+	dq opcode_impl.freturn
 	dq run_method.loop
 	dq run_method.loop
 	dq opcode_impl.return
@@ -258,6 +258,14 @@ opcodes:
 	dq run_method.loop
 	dq run_method.end
 
+constants:
+.float_0:
+	dd 0.0
+.float_1:
+	dd 1.0
+.float_2:
+	dd 2.0
+	
 section .text
 	global run_method
 
@@ -290,31 +298,46 @@ opcode_impl:
 	jmp run_method.loop
 	
 .iconst_m1:
-	mov rax, -1h
-	push rax
+	push -1h
 	jmp run_method.loop
 .iconst_0:
-	mov rax, 0h
-	push rax
+	push 0h
 	jmp run_method.loop
 .iconst_1:
-	mov rax, 1h
-	push rax
+	push 1h
 	jmp run_method.loop
 .iconst_2:
-	mov rax, 2h
-	push rax
+	push 2h
 	jmp run_method.loop
 .iconst_3:
-	mov rax, 3h
-	push rax
+	push 3h
 	jmp run_method.loop
 .iconst_4:
-	mov rax, 4h
-	push rax
+	push 4h
 	jmp run_method.loop
 .iconst_5:
-	mov rax, 5h
+	push 5h
+	jmp run_method.loop
+
+.lconst_0:
+	push 0h
+	push 0h
+	jmp run_method.loop
+.lconst_1:
+	push 1h
+	push 0h
+	jmp run_method.loop
+	
+.fconst_0:
+	mov rax, [constants.float_0]
+	push rax
+	jmp run_method.loop
+.fconst_1:
+	mov rax, [constants.float_1]
+	push rax
+	jmp run_method.loop
+.fconst_2:
+	mov rax, [constants.float_2]
 	push rax
 	jmp run_method.loop
 	
@@ -356,6 +379,27 @@ opcode_impl:
 	push rax
 	jmp run_method.loop
 
+.wload_0:
+	mov rax, [r11]
+	push rax
+	push 0h
+	jmp run_method.loop
+.wload_1:
+	mov rax, [r11+8h]
+	push rax
+	push 0h
+	jmp run_method.loop
+.wload_2:
+	mov rax, [r11+10h]
+	push rax
+	push 0h
+	jmp run_method.loop
+.wload_3:
+	mov rax, [r11+18h]
+	push rax
+	push 0h
+	jmp run_method.loop
+
 .store:
 	mov al, [r10]
 	lea rax, [r11+rax*8h]
@@ -381,6 +425,27 @@ opcode_impl:
 	mov [r11+18h], eax
 	jmp run_method.loop
 
+.wstore_0:
+	pop rax
+	pop rax
+	mov [r11], rax
+	jmp run_method.loop
+.wstore_1:
+	pop rax
+	pop rax
+	mov [r11+8h], rax
+	jmp run_method.loop
+.wstore_2:
+	pop rax
+	pop rax
+	mov [r11+10h], rax
+	jmp run_method.loop
+.wstore_3:
+	pop rax
+	pop rax
+	mov [r11+18h], rax
+	jmp run_method.loop
+	
 .iadd:
 	pop rax
 	pop rbx
@@ -394,4 +459,12 @@ opcode_impl:
 .ireturn:
 	pop rax
 	jmp run_method.end
-	
+.lreturn:
+	pop rax
+	pop rax
+	jmp run_method.end
+.freturn:
+	xorps xmm0, xmm0
+	movss xmm0, [rsp]
+	add rsp, 8h
+	jmp run_method.end
