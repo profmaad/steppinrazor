@@ -2,7 +2,7 @@ section .data
 
 opcodes:
 	dq run_method.loop
-	dq run_method.loop
+	dq opcode_impl.aconst_null
 	dq opcode_impl.iconst_m1
 	dq opcode_impl.iconst_0
 	dq opcode_impl.iconst_1
@@ -22,29 +22,15 @@ opcodes:
 	dq run_method.loop
 	dq run_method.loop
 	dq run_method.loop
+	dq opcode_impl.load
+	dq opcode_impl.load
 	dq run_method.loop
 	dq run_method.loop
 	dq run_method.loop
-	dq run_method.loop
-	dq run_method.loop
-	dq opcode_impl.iload_0
-	dq opcode_impl.iload_1
-	dq opcode_impl.iload_2
-	dq opcode_impl.iload_3
-	dq run_method.loop
-	dq run_method.loop
-	dq run_method.loop
-	dq run_method.loop
-	dq run_method.loop
-	dq run_method.loop
-	dq run_method.loop
-	dq run_method.loop
-	dq run_method.loop
-	dq run_method.loop
-	dq run_method.loop
-	dq run_method.loop
-	dq run_method.loop
-	dq opcode_impl.aload_1
+	dq opcode_impl.load_0
+	dq opcode_impl.load_1
+	dq opcode_impl.load_2
+	dq opcode_impl.load_3
 	dq run_method.loop
 	dq run_method.loop
 	dq run_method.loop
@@ -58,12 +44,26 @@ opcodes:
 	dq run_method.loop
 	dq run_method.loop
 	dq run_method.loop
+	dq opcode_impl.load_1
 	dq run_method.loop
 	dq run_method.loop
-	dq opcode_impl.istore_0
-	dq opcode_impl.istore_1
-	dq opcode_impl.istore_2
-	dq opcode_impl.istore_3
+	dq run_method.loop
+	dq run_method.loop
+	dq run_method.loop
+	dq run_method.loop
+	dq run_method.loop
+	dq run_method.loop
+	dq run_method.loop
+	dq run_method.loop
+	dq opcode_impl.store
+	dq run_method.loop
+	dq run_method.loop
+	dq run_method.loop
+	dq run_method.loop
+	dq opcode_impl.store_0
+	dq opcode_impl.store_1
+	dq opcode_impl.store_2
+	dq opcode_impl.store_3
 	dq run_method.loop
 	dq run_method.loop
 	dq run_method.loop
@@ -269,8 +269,7 @@ run_method:
 	mov r10, rdx
 
 	;; reserve space for local variables (4 bytes per slot)
-	mov rax, 8h
-	mul rsi
+	lea rax, [rsi*8h]
 	sub rsp, rax
 	;; and save a pointer to the first local variable
 	mov r11, rsp
@@ -286,6 +285,10 @@ run_method:
 
 opcode_impl:
 
+.aconst_null:
+	push 0x0
+	jmp run_method.loop
+	
 .iconst_m1:
 	mov rax, -1h
 	push rax
@@ -329,43 +332,53 @@ opcode_impl:
 	add r10, 2h
 	jmp run_method.loop
 
-.iload_0:
+.load:
+	mov al, [r10]
+	mov rax, [r11+rax*8h]
+	push rax
+	add r10, 1h
+	jmp run_method.loop
+	
+.load_0:
 	mov eax, [r11]
 	push rax
 	jmp run_method.loop
-.iload_1:
+.load_1:
 	mov eax, [r11+8h]
 	push rax
 	jmp run_method.loop
-.iload_2:
+.load_2:
 	mov eax, [r11+10h]
 	push rax
 	jmp run_method.loop
-.iload_3:
+.load_3:
 	mov eax, [r11+18h]
 	push rax
 	jmp run_method.loop
 
-.istore_0:
+.store:
+	mov al, [r10]
+	lea rax, [r11+rax*8h]
+	pop rbx
+	mov [rax], rbx
+	add r10, 1h
+	jmp run_method.loop
+	
+.store_0:
 	pop rax
 	mov [r11], eax
 	jmp run_method.loop
-.istore_1:
+.store_1:
 	pop rax
 	mov [r11+8h], eax
 	jmp run_method.loop
-.istore_2:
+.store_2:
 	pop rax
 	mov [r11+10h], eax
 	jmp run_method.loop
-.istore_3:
+.store_3:
 	pop rax
 	mov [r11+18h], eax
-	jmp run_method.loop
-
-.aload_1:
-	mov eax, [r11]
-	push rax
 	jmp run_method.loop
 
 .iadd:
