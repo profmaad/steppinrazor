@@ -3,13 +3,13 @@ section .data
 opcodes:
 	dq run_method.loop
 	dq run_method.loop
-	dq run_method.loop
-	dq run_method.loop
-	dq run_method.loop
-	dq run_method.loop
-	dq run_method.loop
-	dq run_method.loop
-	dq run_method.loop
+	dq opcode_impl.iconst_m1
+	dq opcode_impl.iconst_0
+	dq opcode_impl.iconst_1
+	dq opcode_impl.iconst_2
+	dq opcode_impl.iconst_3
+	dq opcode_impl.iconst_4
+	dq opcode_impl.iconst_5
 	dq run_method.loop
 	dq run_method.loop
 	dq run_method.loop
@@ -285,6 +285,35 @@ run_method:
 	ret
 
 opcode_impl:
+
+.iconst_m1:
+	mov rax, -1h
+	push rax
+	jmp run_method.loop
+.iconst_0:
+	mov rax, 0h
+	push rax
+	jmp run_method.loop
+.iconst_1:
+	mov rax, 1h
+	push rax
+	jmp run_method.loop
+.iconst_2:
+	mov rax, 2h
+	push rax
+	jmp run_method.loop
+.iconst_3:
+	mov rax, 3h
+	push rax
+	jmp run_method.loop
+.iconst_4:
+	mov rax, 4h
+	push rax
+	jmp run_method.loop
+.iconst_5:
+	mov rax, 5h
+	push rax
+	jmp run_method.loop
 	
 .bipush:
 	mov al, [r10]
