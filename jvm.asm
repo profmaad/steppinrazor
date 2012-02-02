@@ -23,10 +23,10 @@ opcodes:
 	dq run_method.loop
 	dq run_method.loop
 	dq opcode_impl.load
+	dq opcode_impl.wload
+	dq run_method.loop
+	dq run_method.loop
 	dq opcode_impl.load
-	dq run_method.loop
-	dq run_method.loop
-	dq run_method.loop
 	dq opcode_impl.load_0
 	dq opcode_impl.load_1
 	dq opcode_impl.load_2
@@ -56,7 +56,7 @@ opcodes:
 	dq run_method.loop
 	dq run_method.loop
 	dq opcode_impl.store
-	dq run_method.loop
+	dq opcode_impl.wstore
 	dq run_method.loop
 	dq run_method.loop
 	dq run_method.loop
@@ -361,6 +361,13 @@ opcode_impl:
 	push rax
 	add r10, 1h
 	jmp run_method.loop
+.wload:
+	mov al, [r10]
+	mov rax, [r11+rax*8h]
+	push rax
+	push 0h
+	add r10, 1h
+	jmp run_method.loop
 	
 .load_0:
 	mov eax, [r11]
@@ -403,6 +410,14 @@ opcode_impl:
 .store:
 	mov al, [r10]
 	lea rax, [r11+rax*8h]
+	pop rbx
+	mov [rax], rbx
+	add r10, 1h
+	jmp run_method.loop
+.wstore:
+	mov al, [r10]
+	lea rax, [r11+rax*8h]
+	pop rbx
 	pop rbx
 	mov [rax], rbx
 	add r10, 1h
