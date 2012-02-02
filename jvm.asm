@@ -98,7 +98,7 @@ opcodes:
 	dq run_method.loop
 	dq run_method.loop
 	dq opcode_impl.iadd
-	dq run_method.loop
+	dq opcode_impl.ladd
 	dq run_method.loop
 	dq run_method.loop
 	dq run_method.loop
@@ -466,6 +466,15 @@ opcode_impl:
 	pop rbx
 	add eax, ebx
 	push rax
+	jmp run_method.loop
+.ladd:
+	pop rax
+	pop rax
+	pop rbx
+	pop rbx
+	add rax, rbx
+	push rax
+	push 0h
 	jmp run_method.loop
 
 .return:
