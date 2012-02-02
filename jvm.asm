@@ -18,7 +18,7 @@ opcodes:
 	dq run_method.loop
 	dq run_method.loop
 	dq opcode_impl.bipush
-	dq run_method.loop
+	dq opcode_impl.sipush
 	dq run_method.loop
 	dq run_method.loop
 	dq run_method.loop
@@ -291,6 +291,13 @@ opcode_impl:
 	movsx rax, al
 	push rax
 	add r10, 1h
+	jmp run_method.loop
+.sipush:
+	mov ax, [r10]
+	xchg al, ah
+	movsx rax, ax
+	push rax
+	add r10, 2h
 	jmp run_method.loop
 
 .iload_0:
