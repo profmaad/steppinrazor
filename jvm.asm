@@ -288,6 +288,7 @@ opcode_impl:
 	
 .bipush:
 	mov al, [r10]
+	movsx rax, al
 	push rax
 	add r10, 1h
 	jmp run_method.loop

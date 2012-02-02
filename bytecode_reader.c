@@ -84,7 +84,7 @@ int main(int argc, char **argv)
 	printf("\n");
 
 	int result = run_method(method->max_stack, method->max_locals, method->bytecode);
-	printf("result: 0x%x\n", result);
+	printf("result: %d\n", result);
 
 	free(method->bytecode);
 	free(method);
