@@ -611,6 +611,11 @@ opcode_impl:
 	jmp run_method.loop
 
 .idiv:
+	xor rdx,rdx
+	pop rbx
+	pop rax
+	idiv ebx
+	push rax
 	jmp run_method.loop
 .ldiv:
 	jmp run_method.loop

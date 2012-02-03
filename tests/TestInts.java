@@ -53,6 +53,42 @@ class TestInts
 
 		return i*j;
 	}
+	public static int div()
+	{
+		int i,j;
+
+		i = 9;
+		j = 3;
+
+		return i/j;
+	}
+	public static int divneg()
+	{
+		int i,j;
+
+		i = 23;
+		j = -1;
+		
+		return i/j;
+	}
+	public static int divfrac()
+	{
+		int i,j;
+
+		i = 23;
+		j = 2;
+
+		return i/j;
+	}
+	public static int divfraczero()
+	{
+		int i,j;
+
+		i = 2;
+		j = 3;
+
+		return i/j;
+	}
 
 	public static int negative()
 	{
