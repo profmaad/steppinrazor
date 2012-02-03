@@ -15,8 +15,8 @@ opcodes:
 	dq opcode_impl.fconst_0
 	dq opcode_impl.fconst_1
 	dq opcode_impl.fconst_2
-	dq run_method.loop
-	dq run_method.loop
+	dq opcode_impl.dconst_0
+	dq opcode_impl.dconst_1
 	dq opcode_impl.bipush
 	dq opcode_impl.sipush
 	dq run_method.loop
@@ -24,8 +24,8 @@ opcodes:
 	dq run_method.loop
 	dq opcode_impl.load
 	dq opcode_impl.wload
-	dq run_method.loop
-	dq run_method.loop
+	dq opcode_impl.load
+	dq opcode_impl.wload
 	dq opcode_impl.load
 	dq opcode_impl.load_0
 	dq opcode_impl.load_1
@@ -35,18 +35,18 @@ opcodes:
 	dq opcode_impl.wload_1
 	dq opcode_impl.wload_2
 	dq opcode_impl.wload_3
-	dq run_method.loop
-	dq run_method.loop
-	dq run_method.loop
-	dq run_method.loop
-	dq run_method.loop
-	dq run_method.loop
-	dq run_method.loop
-	dq run_method.loop
-	dq run_method.loop
+	dq opcode_impl.load_0
 	dq opcode_impl.load_1
-	dq run_method.loop
-	dq run_method.loop
+	dq opcode_impl.load_2
+	dq opcode_impl.load_3
+	dq opcode_impl.wload_0
+	dq opcode_impl.wload_1
+	dq opcode_impl.wload_2
+	dq opcode_impl.wload_3
+	dq opcode_impl.load_0
+	dq opcode_impl.load_1
+	dq opcode_impl.load_2
+	dq opcode_impl.load_3
 	dq run_method.loop
 	dq run_method.loop
 	dq run_method.loop
@@ -57,9 +57,9 @@ opcodes:
 	dq run_method.loop
 	dq opcode_impl.store
 	dq opcode_impl.wstore
-	dq run_method.loop
-	dq run_method.loop
-	dq run_method.loop
+	dq opcode_impl.store
+	dq opcode_impl.wstore
+	dq opcode_impl.store
 	dq opcode_impl.store_0
 	dq opcode_impl.store_1
 	dq opcode_impl.store_2
@@ -68,18 +68,18 @@ opcodes:
 	dq opcode_impl.wstore_1
 	dq opcode_impl.wstore_2
 	dq opcode_impl.wstore_3
-	dq run_method.loop
-	dq run_method.loop
-	dq run_method.loop
-	dq run_method.loop
-	dq run_method.loop
-	dq run_method.loop
-	dq run_method.loop
-	dq run_method.loop
-	dq run_method.loop
-	dq run_method.loop
-	dq run_method.loop
-	dq run_method.loop
+	dq opcode_impl.store_0
+	dq opcode_impl.store_1
+	dq opcode_impl.store_2
+	dq opcode_impl.store_3
+	dq opcode_impl.wstore_0
+	dq opcode_impl.wstore_1
+	dq opcode_impl.wstore_2
+	dq opcode_impl.wstore_3
+	dq opcode_impl.store_0
+	dq opcode_impl.store_1
+	dq opcode_impl.store_2
+	dq opcode_impl.store_3
 	dq run_method.loop
 	dq run_method.loop
 	dq run_method.loop
@@ -176,7 +176,7 @@ opcodes:
 	dq opcode_impl.ireturn
 	dq opcode_impl.lreturn
 	dq opcode_impl.freturn
-	dq run_method.loop
+	dq opcode_impl.dreturn
 	dq run_method.loop
 	dq opcode_impl.return
 	dq run_method.loop
@@ -265,6 +265,10 @@ constants:
 	dd 1.0
 .float_2:
 	dd 2.0
+.double_0:
+	dq 0.0
+.double_1:
+	dq 1.0
 	
 section .text
 	global run_method
@@ -339,6 +343,16 @@ opcode_impl:
 .fconst_2:
 	mov rax, [constants.float_2]
 	push rax
+	jmp run_method.loop
+.dconst_0:
+	mov rax, [constants.double_0]
+	push rax
+	push 0h
+	jmp run_method.loop
+.dconst_1:
+	mov rax, [constants.double_1]
+	push rax
+	push 0h
 	jmp run_method.loop
 	
 .bipush:
@@ -489,4 +503,9 @@ opcode_impl:
 	xorps xmm0, xmm0
 	movss xmm0, [rsp]
 	add rsp, 8h
+	jmp run_method.end
+.dreturn:
+	xorps xmm0, xmm0
+	movlps xmm0, [rsp+8h]
+	add rsp, 10h
 	jmp run_method.end
