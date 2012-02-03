@@ -193,4 +193,23 @@ class TestLongs
 		return l%m;
 	}
 
+	public static long neg()
+	{
+		long l;
+
+		l = 1;
+		l = -l;
+
+		return l;
+	}
+	public static long negneg()
+	{
+		long l;
+
+		l = 0;
+		l -= 1;
+		l = -l;
+
+		return l;
+	}
 }

@@ -156,4 +156,23 @@ class TestInts
 
 		return i+j+k;
 	}
+
+	public static int neg()
+	{
+		int i;
+
+		i = 23;
+		i = -i;
+
+		return i;
+	}
+	public static int negneg()
+	{
+		int i;
+
+		i = -23;
+		i = -i;
+
+		return i;
+	}
 }

@@ -117,10 +117,10 @@ opcodes:
 	dq opcode_impl.lrem
 	dq opcode_impl.frem
 	dq opcode_impl.drem
-	dq run_method.loop
-	dq run_method.loop
-	dq run_method.loop
-	dq run_method.loop
+	dq opcode_impl.ineg
+	dq opcode_impl.lneg
+	dq opcode_impl.fneg
+	dq opcode_impl.dneg
 	dq run_method.loop
 	dq run_method.loop
 	dq run_method.loop
@@ -694,6 +694,17 @@ opcode_impl:
 	add rsp, 10h
 	jmp run_method.loop
 
+.ineg:
+	neg DWORD [rsp]
+	jmp run_method.loop
+.lneg:
+	neg QWORD [rsp+8h]
+	jmp run_method.loop
+.fneg:
+	jmp run_method.loop
+.dneg:
+	jmp run_method.loop	
+	
 .return:
 	xor rax,rax
 	jmp run_method.end
