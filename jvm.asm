@@ -409,17 +409,15 @@ opcode_impl:
 
 .store:
 	mov al, [r10]
-	lea rax, [r11+rax*8h]
 	pop rbx
-	mov [rax], rbx
+	mov [r11+rax*8h], rbx
 	add r10, 1h
 	jmp run_method.loop
 .wstore:
 	mov al, [r10]
-	lea rax, [r11+rax*8h]
 	pop rbx
 	pop rbx
-	mov [rax], rbx
+	mov [r11+rax*8h], rbx
 	add r10, 1h
 	jmp run_method.loop
 	
