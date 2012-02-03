@@ -621,15 +621,17 @@ opcode_impl:
 	jmp run_method.loop
 
 .idiv:
-	xor rdx,rdx
 	pop rbx
 	pop rax
+	mov edx, eax
+	shr edx, 0x1f
 	idiv ebx
 	push rax
 	jmp run_method.loop
 .ldiv:
-	xor rdx, rdx
 	mov rax, [rsp+18h]
+	mov rdx, rax
+	shr rdx, 0x3f
 	idiv QWORD [rsp+8h]
 	mov [rsp+18h], rax
 	add rsp, 10h
@@ -650,15 +652,17 @@ opcode_impl:
 	jmp run_method.loop
 
 .irem:
-	xor rdx,rdx
 	pop rbx
 	pop rax
+	mov edx, eax
+	sar edx, 0x1f
 	idiv ebx
 	push rdx
 	jmp run_method.loop
 .lrem:
-	xor rdx, rdx
 	mov rax, [rsp+18h]
+	mov rdx, rax
+	sar rdx, 0x3f
 	idiv QWORD [rsp+8h]
 	mov [rsp+18h], rdx
 	add rsp, 10h

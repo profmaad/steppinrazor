@@ -105,5 +105,92 @@ class TestLongs
 
 		return l/m;
 	}
+	public static long rem()
+	{
+		long l,m;
+
+		l = 1;
+		l += 1;
+		l += 1;
+		l += 1;
+		l += 1;
+		l += 1;
+		l += 1;
+		l += 1;
+		l += 1;
+
+		m = 1;
+		m += 1;
+		m += 1;
+		m += 1;
+
+		return l%m;
+	}
+	public static long remzero()
+	{
+		long l,m;
+
+		l = 1;
+		l += 1;
+		l += 1;
+		l += 1;
+		l += 1;
+		l += 1;
+		l += 1;
+		l += 1;
+		l += 1;
+
+		m = 1;
+		m += 1;
+		m += 1;
+
+		return l%m;
+	}
+	public static long remneg()
+	{
+		long l,m;
+
+		l = 0;
+		l -= 1;
+		l -= 1;
+		l -= 1;
+		l -= 1;
+		l -= 1;
+		l -= 1;
+		l -= 1;
+		l -= 1;
+		l -= 1;
+
+		m = 1;
+		m += 1;
+		m += 1;
+		m += 1;
+
+		return l%m;
+	}
+	public static long remneg2()
+	{
+		long i,j;
+
+		long l,m;
+
+		l = 1;
+		l += 1;
+		l += 1;
+		l += 1;
+		l += 1;
+		l += 1;
+		l += 1;
+		l += 1;
+		l += 1;
+
+		m = 0;
+		m -= 1;
+		m -= 1;
+		m -= 1;
+		m -= 1;
+
+		return l%m;
+	}
 
 }

@@ -71,6 +71,15 @@ class TestInts
 		
 		return i/j;
 	}
+	public static int divneg2()
+	{
+		int i,j;
+
+		i = 9;
+		j = -4;
+		
+		return i/j;
+	}	
 	public static int divfrac()
 	{
 		int i,j;
@@ -89,6 +98,43 @@ class TestInts
 
 		return i/j;
 	}
+	public static int rem()
+	{
+		int i,j;
+
+		i = 9;
+		j = 4;
+		
+		return i%j;
+	}
+	public static int remzero()
+	{
+		int i,j;
+
+		i = 9;
+		j = 3;
+
+		return i%j;
+	}
+	public static int remneg()
+	{
+		int i,j;
+
+		i = -9;
+		j = 4;
+
+		return i%j;
+	}
+	public static int remneg2()
+	{
+		int i,j;
+
+		i = 9;
+		j = -4;
+
+		return i%j;
+	}
+
 
 	public static int negative()
 	{
