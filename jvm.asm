@@ -99,8 +99,8 @@ opcodes:
 	dq opcode_impl.swap
 	dq opcode_impl.iadd
 	dq opcode_impl.ladd
-	dq run_method.loop
-	dq run_method.loop
+	dq opcode_impl.fadd
+	dq opcode_impl.dadd
 	dq run_method.loop
 	dq run_method.loop
 	dq run_method.loop
@@ -554,6 +554,21 @@ opcode_impl:
 	add rax, rbx
 	push rax
 	push 0h
+	jmp run_method.loop
+
+.fadd:
+	xorps xmm0, xmm0
+	movss xmm0, [rsp]
+	addss xmm0, [rsp+8h]
+	movss [rsp+8h], xmm0
+	add rsp, 8h
+	jmp run_method.loop
+.dadd:
+	xorps xmm0, xmm0
+	movlpd xmm0, [rsp+8h]
+	addsd xmm0, [rsp+18h]
+	movlpd [rsp+18h], xmm0
+	add rsp, 10h
 	jmp run_method.loop
 
 .return:

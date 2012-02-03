@@ -8,4 +8,15 @@ class TestDoubles
 
 		return d;
 	}
+
+	public static double add()
+	{
+		double d,e,f;
+
+		d = 0;
+		e = 1;
+		f = 1;
+
+		return e+e+e+e+e+e+e+e+e+e+e+e+e+e+e+e+e+e+e+e+e+e+f;
+	}
 }
