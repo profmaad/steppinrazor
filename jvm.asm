@@ -618,6 +618,11 @@ opcode_impl:
 	push rax
 	jmp run_method.loop
 .ldiv:
+	xor rdx, rdx
+	mov rax, [rsp+18h]
+	idiv QWORD [rsp+8h]
+	mov [rsp+18h], rax
+	add rsp, 10h
 	jmp run_method.loop
 .fdiv:
 	jmp run_method.loop
