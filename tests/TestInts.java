@@ -25,6 +25,16 @@ class TestInts
 
 		return x;
 	}
+	public static int sub()
+	{
+		int i,j,k;
+		
+		i = 23;
+		j = 42;
+		k = -4;
+
+		return i-j-k;
+	}
 
 	public static int negative()
 	{

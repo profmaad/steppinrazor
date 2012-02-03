@@ -101,10 +101,10 @@ opcodes:
 	dq opcode_impl.ladd
 	dq opcode_impl.fadd
 	dq opcode_impl.dadd
-	dq run_method.loop
-	dq run_method.loop
-	dq run_method.loop
-	dq run_method.loop
+	dq opcode_impl.isub
+	dq opcode_impl.lsub
+	dq opcode_impl.fsub
+	dq opcode_impl.dsub
 	dq run_method.loop
 	dq run_method.loop
 	dq run_method.loop
@@ -555,7 +555,6 @@ opcode_impl:
 	push rax
 	push 0h
 	jmp run_method.loop
-
 .fadd:
 	xorps xmm0, xmm0
 	movss xmm0, [rsp]
@@ -571,6 +570,26 @@ opcode_impl:
 	add rsp, 10h
 	jmp run_method.loop
 
+.isub:
+	pop rax
+	pop rbx
+	sub ebx, eax
+	push rbx
+	jmp run_method.loop
+.lsub:
+	pop rax
+	pop rax
+	pop rbx
+	pop rbx
+	sub rbx, rax
+	push rbx
+	push 0h
+	jmp run_method.loop
+.fsub:
+	jmp run_method.loop
+.dsub:
+	jmp run_method.loop
+	
 .return:
 	xor rax,rax
 	jmp run_method.end
