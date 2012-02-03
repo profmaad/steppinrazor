@@ -105,14 +105,14 @@ opcodes:
 	dq opcode_impl.lsub
 	dq opcode_impl.fsub
 	dq opcode_impl.dsub
-	dq run_method.loop
-	dq run_method.loop
-	dq run_method.loop
-	dq run_method.loop
-	dq run_method.loop
-	dq run_method.loop
-	dq run_method.loop
-	dq run_method.loop
+	dq opcode_impl.imul
+	dq opcode_impl.lmul
+	dq opcode_impl.fmul
+	dq opcode_impl.dmul
+	dq opcode_impl.idiv
+	dq opcode_impl.ldiv
+	dq opcode_impl.fdiv
+	dq opcode_impl.ddiv
 	dq run_method.loop
 	dq run_method.loop
 	dq run_method.loop
@@ -547,13 +547,10 @@ opcode_impl:
 	push rax
 	jmp run_method.loop
 .ladd:
-	pop rax
-	pop rax
-	pop rbx
-	pop rbx
-	add rax, rbx
-	push rax
-	push 0h
+	mov rax, [rsp+8h]	
+	add rax, [rsp+18h]
+	mov [rsp+18h], rax
+	add rsp, 10h
 	jmp run_method.loop
 .fadd:
 	xorps xmm0, xmm0
@@ -577,13 +574,10 @@ opcode_impl:
 	push rbx
 	jmp run_method.loop
 .lsub:
-	pop rax
-	pop rax
-	pop rbx
-	pop rbx
-	sub rbx, rax
-	push rbx
-	push 0h
+	mov rbx, [rsp+18h]
+	sub rbx, [rsp+8h]
+	mov [rsp+18h], rbx
+	add rsp, 10h
 	jmp run_method.loop
 .fsub:
 	xorps xmm0, xmm0
@@ -598,6 +592,31 @@ opcode_impl:
 	subsd xmm0, [rsp+8h]
 	movlpd [rsp+18h], xmm0
 	add rsp, 10h
+	jmp run_method.loop
+
+.imul:
+	pop rax
+	imul eax, [rsp]
+	mov [rsp], rax
+	jmp run_method.loop
+.lmul:
+	mov rax, [rsp+8h]
+	imul rax, [rsp+18h]
+	mov [rsp+18h], rax
+	add rsp, 10h
+	jmp run_method.loop
+.fmul:
+	jmp run_method.loop
+.dmul:
+	jmp run_method.loop
+
+.idiv:
+	jmp run_method.loop
+.ldiv:
+	jmp run_method.loop
+.fdiv:
+	jmp run_method.loop
+.ddiv:
 	jmp run_method.loop
 	
 .return:

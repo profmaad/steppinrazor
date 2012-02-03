@@ -11,19 +11,44 @@ class TestLongs
 
 	public static long add()
 	{
-		long l,k;
+		long l,m;
 		l = 0;
-		k = 1;
+		m = 1;
 
-		return l+k+k+k;
+		return l+m+m+m;
 	}
 
 	public static long sub()
 	{
-		long l,k;
+		long l,m;
 		l = 0;
-		k = 1;
+		m = 1;
 
-		return l-k-k-k;
+		return l-m-m-m;
 	}
+	public static long mul()
+	{
+		long l,m;
+
+		l = 1;
+		l += 1;
+		m = 1;
+		m += 1;
+		m += 1;
+
+		return l*m;
+	}
+	public static long mulneg()
+	{
+		long l,m;
+
+		l = 0;
+		l -= 1;
+		m = 1;
+		m += 1;
+		m += 1;
+
+		return l*m;
+	}
+
 }

@@ -35,6 +35,24 @@ class TestInts
 
 		return i-j-k;
 	}
+	public static int mul()
+	{
+		int i,j;
+
+		i = 23;
+		j = 3;
+		
+		return i*j;
+	}
+	public static int mulneg()
+	{
+		int i,j;
+
+		i = 23;
+		j = -1;
+
+		return i*j;
+	}
 
 	public static int negative()
 	{
