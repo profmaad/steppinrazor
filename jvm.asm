@@ -113,10 +113,10 @@ opcodes:
 	dq opcode_impl.ldiv
 	dq opcode_impl.fdiv
 	dq opcode_impl.ddiv
-	dq run_method.loop
-	dq run_method.loop
-	dq run_method.loop
-	dq run_method.loop
+	dq opcode_impl.irem
+	dq opcode_impl.lrem
+	dq opcode_impl.frem
+	dq opcode_impl.drem
 	dq run_method.loop
 	dq run_method.loop
 	dq run_method.loop
@@ -648,7 +648,36 @@ opcode_impl:
 	movlpd [rsp+18h], xmm0
 	add rsp, 10h
 	jmp run_method.loop
-	
+
+.irem:
+	xor rdx,rdx
+	pop rbx
+	pop rax
+	idiv ebx
+	push rdx
+	jmp run_method.loop
+.lrem:
+	xor rdx, rdx
+	mov rax, [rsp+18h]
+	idiv QWORD [rsp+8h]
+	mov [rsp+18h], rdx
+	add rsp, 10h
+	jmp run_method.loop
+.frem:
+	xorps xmm0, xmm0
+	movss xmm0, [rsp+8h]
+	divss xmm0, [rsp]
+	movss [rsp+8h], xmm0
+	add rsp, 8h
+	jmp run_method.loop
+.drem:
+	xorps xmm0, xmm0
+	movlpd xmm0, [rsp+18h]
+	divsd xmm0, [rsp+8h]
+	movlpd [rsp+18h], xmm0
+	add rsp, 10h
+	jmp run_method.loop
+
 .return:
 	xor rax,rax
 	jmp run_method.end
