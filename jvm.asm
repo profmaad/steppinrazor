@@ -606,6 +606,11 @@ opcode_impl:
 	add rsp, 10h
 	jmp run_method.loop
 .fmul:
+	xorps xmm0, xmm0
+	movss xmm0, [rsp+8h]
+	mulss xmm0, [rsp]
+	movss [rsp+8h], xmm0
+	add rsp, 8h
 	jmp run_method.loop
 .dmul:
 	jmp run_method.loop
@@ -625,6 +630,11 @@ opcode_impl:
 	add rsp, 10h
 	jmp run_method.loop
 .fdiv:
+	xorps xmm0, xmm0
+	movss xmm0, [rsp+8h]
+	divss xmm0, [rsp]
+	movss [rsp+8h], xmm0
+	add rsp, 8h
 	jmp run_method.loop
 .ddiv:
 	jmp run_method.loop

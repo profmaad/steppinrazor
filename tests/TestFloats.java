@@ -29,4 +29,47 @@ class TestFloats
 
 		return f-g-h;
 	}
+	public static float mul()
+	{
+		float f,g;
+
+		f = 2;
+		g = 2;
+		g += 1;
+
+		return f*g;
+	}
+	public static float mulneg()
+	{
+		float f,g;
+
+		f = 2;
+		f += 1;
+		g = 0;
+		g -= 1;
+
+		return f*g;
+	}
+	public static float div()
+	{
+		float f,g;
+
+		f = 2;
+		f += 1;
+		g = 2;
+
+		return f/g;
+	}
+	public static float divneg()
+	{
+		float f,g;
+
+		f = 2;
+		f += 1;
+		g = 0;
+		g -= 1;
+		g -= 1;
+
+		return f/g;
+	}
 }

@@ -6,8 +6,8 @@
 
 # include <arpa/inet.h>
 
-extern int run_method(uint16_t max_stack, uint16_t max_locals, uint8_t* bytecode);
-//extern float run_method(uint16_t max_stack, uint16_t max_locals, uint8_t* bytecode);
+//extern int run_method(uint16_t max_stack, uint16_t max_locals, uint8_t* bytecode);
+extern float run_method(uint16_t max_stack, uint16_t max_locals, uint8_t* bytecode);
 //extern double run_method(uint16_t max_stack, uint16_t max_locals, uint8_t* bytecode);
 
 typedef struct java_method_
@@ -85,8 +85,8 @@ int main(int argc, char **argv)
 	}
 	printf("\n");
 
-//	printf("result: %f\n", run_method(method->max_stack, method->max_locals, method->bytecode));
-	printf("result: %d\n", run_method(method->max_stack, method->max_locals, method->bytecode));
+	printf("result: %f\n", run_method(method->max_stack, method->max_locals, method->bytecode));
+//	printf("result: %d\n", run_method(method->max_stack, method->max_locals, method->bytecode));
 
 	free(method->bytecode);
 	free(method);
