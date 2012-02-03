@@ -88,15 +88,15 @@ opcodes:
 	dq run_method.loop
 	dq run_method.loop
 	dq run_method.loop
-	dq run_method.loop
-	dq run_method.loop
-	dq run_method.loop
-	dq run_method.loop
-	dq run_method.loop
-	dq run_method.loop
-	dq run_method.loop
-	dq run_method.loop
-	dq run_method.loop
+	dq opcode_impl.pop
+	dq opcode_impl.pop2
+	dq opcode_impl.dup
+	dq opcode_impl.dup_x1
+	dq opcode_impl.dup_x2
+	dq opcode_impl.dup2
+	dq opcode_impl.dup2_x1
+	dq opcode_impl.dup2_x2
+	dq opcode_impl.swap
 	dq opcode_impl.iadd
 	dq opcode_impl.ladd
 	dq run_method.loop
@@ -471,6 +471,73 @@ opcode_impl:
 	pop rax
 	pop rax
 	mov [r11+18h], rax
+	jmp run_method.loop
+
+.pop:
+	pop rax
+	jmp run_method.loop
+.pop2:
+	pop rax
+	pop rax
+	jmp run_method.loop
+
+.dup:
+	pop rax
+	push rax
+	push rax
+	jmp run_method.loop
+.dup_x1:
+	pop rax
+	pop rbx
+	push rax
+	push rbx
+	push rax
+	jmp run_method.loop
+.dup_x2:
+	pop rax
+	pop rbx
+	pop rcx
+	push rax
+	push rcx
+	push rbx
+	push rax
+	jmp run_method.loop
+.dup2:
+	pop rax
+	pop rbx
+	push rbx
+	push rax
+	push rbx
+	push rax
+	jmp run_method.loop
+.dup2_x1:
+	pop rax
+	pop rbx
+	pop rcx
+	push rbx
+	push rax
+	push rcx
+	push rbx
+	push rax
+	jmp run_method.loop
+.dup2_x2:
+	pop rax
+	pop rbx
+	pop rcx
+	pop rdx
+	push rbx
+	push rax
+	push rdx
+	push rcx
+	push rbx
+	push rax
+	jmp run_method.loop
+
+.swap:
+	pop rax
+	pop rbx
+	push rax
+	push rbx
 	jmp run_method.loop
 	
 .iadd:
