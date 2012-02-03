@@ -20,4 +20,13 @@ class TestFloats
 
 		return f+g+h;
 	}
+	public static float sub()
+	{
+		float f,g,h;
+		f = 0;
+		g = 1;
+		h = 2;
+
+		return f-g-h;
+	}
 }

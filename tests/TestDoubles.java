@@ -19,4 +19,13 @@ class TestDoubles
 
 		return e+e+e+e+e+e+e+e+e+e+e+e+e+e+e+e+e+e+e+e+e+e+f;
 	}
+	public static double sub()
+	{
+		double d,e;
+
+		d = 0;
+		e = 1;
+
+		return d-e-e-e;
+	}
 }
