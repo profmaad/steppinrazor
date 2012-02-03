@@ -77,4 +77,19 @@ class TestDoubles
 
 		return f/g;
 	}
+	public static double rem()
+	{
+		double f,g;
+
+		f = 1;
+		f += 1;
+		f += 1;
+		f += 1;
+		f += 1;
+		g = 1;
+		g += 1;
+		g += 1;
+
+		return f%g;
+	}
 }

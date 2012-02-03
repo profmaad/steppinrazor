@@ -72,4 +72,15 @@ class TestFloats
 
 		return f/g;
 	}
+
+	public static float rem()
+	{
+		float f,g;
+
+		f = 2;
+		f += 1;
+		g = 2;
+
+		return f%g;
+	}
 }

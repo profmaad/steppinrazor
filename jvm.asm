@@ -668,8 +668,30 @@ opcode_impl:
 	add rsp, 10h
 	jmp run_method.loop
 .frem:
+	finit
+	fld DWORD [rsp]
+	fld DWORD [rsp+8h]
+.frem_l:
+	fprem
+	fstsw ax
+	fwait
+	sahf
+	jp .frem_l
+	fstp DWORD [rsp+8h]
+	add rsp, 8h
 	jmp run_method.loop
 .drem:
+	finit
+	fld QWORD [rsp+8]
+	fld QWORD [rsp+18h]
+.drem_l:
+	fprem
+	fstsw ax
+	fwait
+	sahf
+	jp .drem_l
+	fstp QWORD [rsp+18h]
+	add rsp, 10h
 	jmp run_method.loop
 
 .return:
