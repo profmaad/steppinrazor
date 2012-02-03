@@ -7,8 +7,8 @@
 # include <arpa/inet.h>
 
 //extern int run_method(uint16_t max_stack, uint16_t max_locals, uint8_t* bytecode);
-extern float run_method(uint16_t max_stack, uint16_t max_locals, uint8_t* bytecode);
-//extern double run_method(uint16_t max_stack, uint16_t max_locals, uint8_t* bytecode);
+//extern float run_method(uint16_t max_stack, uint16_t max_locals, uint8_t* bytecode);
+extern double run_method(uint16_t max_stack, uint16_t max_locals, uint8_t* bytecode);
 
 typedef struct java_method_
 {

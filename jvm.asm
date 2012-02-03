@@ -613,6 +613,11 @@ opcode_impl:
 	add rsp, 8h
 	jmp run_method.loop
 .dmul:
+	xorps xmm0, xmm0
+	movlpd xmm0, [rsp+18h]
+	mulsd xmm0, [rsp+8h]
+	movlpd [rsp+18h], xmm0
+	add rsp, 10h
 	jmp run_method.loop
 
 .idiv:
@@ -637,6 +642,11 @@ opcode_impl:
 	add rsp, 8h
 	jmp run_method.loop
 .ddiv:
+	xorps xmm0, xmm0
+	movlpd xmm0, [rsp+18h]
+	divsd xmm0, [rsp+8h]
+	movlpd [rsp+18h], xmm0
+	add rsp, 10h
 	jmp run_method.loop
 	
 .return:

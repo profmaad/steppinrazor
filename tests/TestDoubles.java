@@ -28,4 +28,53 @@ class TestDoubles
 
 		return d-e-e-e;
 	}
+	public static double mul()
+	{
+		double f,g;
+
+		f = 1;
+		f += 1;
+		g = 1;
+		g += 1;
+		g += 1;
+
+		return f*g;
+	}
+	public static double mulneg()
+	{
+		double f,g;
+
+		f = 1;
+		f += 1;
+		f += 1;
+		g = 0;
+		g -= 1;
+
+		return f*g;
+	}
+	public static double div()
+	{
+		double f,g;
+
+		f = 1;
+		f += 1;
+		f += 1;
+		g = 1;
+		g += 1;
+
+		return f/g;
+	}
+	public static double divneg()
+	{
+		double f,g;
+
+		f = 1;
+		f += 1;
+		f += 1;
+		g = 0;
+		g -= 1;
+		g -= 1;
+
+		return f/g;
+	}
 }
