@@ -175,4 +175,14 @@ class TestInts
 
 		return i;
 	}
+
+	public static int shl()
+	{
+		int i;
+
+		i = 1;
+		i = i << 31;
+
+		return i;
+	}
 }

@@ -86,7 +86,7 @@ int main(int argc, char **argv)
 	printf("\n");
 
 //	printf("result: %f\n", run_method(method->max_stack, method->max_locals, method->bytecode));
-	printf("result: %d\n", run_method(method->max_stack, method->max_locals, method->bytecode));
+	printf("result: %ld\n", run_method(method->max_stack, method->max_locals, method->bytecode));
 
 	free(method->bytecode);
 	free(method);

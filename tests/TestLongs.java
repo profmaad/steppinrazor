@@ -212,4 +212,13 @@ class TestLongs
 
 		return l;
 	}
+	public static long shl()
+	{
+		long l;
+
+		l = 1;
+		l = l << 32;
+
+		return l;
+	}
 }

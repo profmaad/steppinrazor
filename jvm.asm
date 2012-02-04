@@ -121,19 +121,19 @@ opcodes:
 	dq opcode_impl.lneg
 	dq opcode_impl.fneg
 	dq opcode_impl.dneg
-	dq run_method.loop
-	dq run_method.loop
-	dq run_method.loop
-	dq run_method.loop
-	dq run_method.loop
-	dq run_method.loop
-	dq run_method.loop
-	dq run_method.loop
-	dq run_method.loop
-	dq run_method.loop
-	dq run_method.loop
-	dq run_method.loop
-	dq run_method.loop
+	dq opcode_impl.ishl
+	dq opcode_impl.lshl
+	dq opcode_impl.ishr
+	dq opcode_impl.lshr
+	dq opcode_impl.iushr
+	dq opcode_impl.lushr
+	dq opcode_impl.iand
+	dq opcode_impl.land
+	dq opcode_impl.ior
+	dq opcode_impl.lor
+	dq opcode_impl.ixor
+	dq opcode_impl.lxor
+	dq opcode_impl.iinc
 	dq run_method.loop
 	dq run_method.loop
 	dq run_method.loop
@@ -703,6 +703,38 @@ opcode_impl:
 .fneg:
 	jmp run_method.loop
 .dneg:
+	jmp run_method.loop	
+
+.ishl:
+	pop rcx
+	sal DWORD [rsp], cl
+	jmp run_method.loop	
+.lshl:
+	pop rcx
+	sal QWORD [rsp+8h], cl
+	jmp run_method.loop	
+.ishr:
+	jmp run_method.loop	
+.lshr:
+	jmp run_method.loop	
+.iushr:
+	jmp run_method.loop	
+.lushr:
+	jmp run_method.loop	
+
+.iand:
+	jmp run_method.loop	
+.land:
+	jmp run_method.loop	
+.ior:
+	jmp run_method.loop	
+.lor:
+	jmp run_method.loop	
+.ixor:
+	jmp run_method.loop	
+.lxor:
+	jmp run_method.loop	
+.iinc:
 	jmp run_method.loop	
 	
 .return:
