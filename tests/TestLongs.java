@@ -304,4 +304,36 @@ class TestLongs
 
 		return l;
 	}
+	public static long or()
+	{
+		long l,m;
+
+		l = 1;
+		l += 1;
+		l += 1;
+		l = l << 5;
+		
+		m = 1;
+		m += 1;
+		m += 1;
+		m = m << 4;
+
+		l = l | m;
+
+		return l;
+	}
+	public static long orneg()
+	{
+		long l,m;
+
+		l = 0;
+		l -= 1;
+		l -= 1;
+
+		m = 1;
+
+		l = l | m;
+
+		return l;
+	}
 }
