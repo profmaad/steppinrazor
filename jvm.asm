@@ -741,12 +741,24 @@ opcode_impl:
 	add rsp, 10h
 	jmp run_method.loop	
 .ior:
+	pop rax
+	or [rsp+8h], eax
+	add rsp, 8h
 	jmp run_method.loop	
 .lor:
+	mov rax, [rsp+8h]
+	or [rsp+18h], rax
+	add rsp, 10h
 	jmp run_method.loop	
 .ixor:
+	pop rax
+	xor [rsp+8h], eax
+	add rsp, 8h
 	jmp run_method.loop	
 .lxor:
+	mov rax, [rsp+8h]
+	xor [rsp+18h], rax
+	add rsp, 10h
 	jmp run_method.loop	
 .iinc:
 	jmp run_method.loop	
