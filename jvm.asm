@@ -761,6 +761,11 @@ opcode_impl:
 	add rsp, 10h
 	jmp run_method.loop	
 .iinc:
+	mov bl, [r10]
+	mov al, [r10+1]
+	movsx rax, al
+	add [r11+rbx*8h], rax
+	add r10, 2h
 	jmp run_method.loop	
 	
 .return:

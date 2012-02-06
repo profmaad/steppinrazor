@@ -253,4 +253,23 @@ class TestInts
 
 		return i;
 	}
+
+	public static int iinc()
+	{
+		int i;
+
+		i = 23;
+		i += 42;
+
+		return i;
+	}
+	public static int iincneg()
+	{
+		int i;
+
+		i = 23;
+		i -= 7;
+
+		return i;
+	}
 }
