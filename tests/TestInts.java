@@ -234,4 +234,23 @@ class TestInts
 
 		return i;
 	}
+
+	public static int and()
+	{
+		int i;
+
+		i = 64+32+16+8+4+2+1;
+		i = i & 0x40;
+
+		return i;
+	}
+	public static int andneg()
+	{
+		int i;
+
+		i = -64-32-16-8-4-2-1;
+		i = i & 0xf0;
+
+		return i;
+	}
 }

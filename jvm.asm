@@ -731,8 +731,14 @@ opcode_impl:
 	jmp run_method.loop	
 
 .iand:
+	pop rax
+	and [rsp+8h], eax
+	add rsp, 8h
 	jmp run_method.loop	
 .land:
+	mov rax, [rsp+8h]
+	and [rsp+18h], rax
+	add rsp, 10h
 	jmp run_method.loop	
 .ior:
 	jmp run_method.loop	
