@@ -181,7 +181,36 @@ class TestInts
 		int i;
 
 		i = 1;
-		i = i << 31;
+		i = i << 30;
+
+		return i;
+	}
+	public static int shlneg()
+	{
+		int i;
+
+		i = -1;
+		i = i << 30;
+
+		return i;
+	}
+	public static int shr()
+	{
+		int i;
+
+		i = 1;
+		i = i << 30;
+		i = i >> 29;
+
+		return i;
+	}
+	public static int shrneg()
+	{
+		int i;
+
+		i = -1;
+		i = i << 30;
+		i = i >> 29;
 
 		return i;
 	}

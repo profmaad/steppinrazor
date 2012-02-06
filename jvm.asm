@@ -708,14 +708,18 @@ opcode_impl:
 .ishl:
 	pop rcx
 	sal DWORD [rsp], cl
-	jmp run_method.loop	
+	jmp run_method.loop
 .lshl:
 	pop rcx
 	sal QWORD [rsp+8h], cl
-	jmp run_method.loop	
+	jmp run_method.loop
 .ishr:
+	pop rcx
+	sar DWORD [rsp], cl
 	jmp run_method.loop	
 .lshr:
+	pop rcx
+	sar QWORD [rsp+8h], cl
 	jmp run_method.loop	
 .iushr:
 	jmp run_method.loop	
