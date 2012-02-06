@@ -103,7 +103,9 @@ int main(int argc, char **argv)
 		break;      
 	case 'D':
 		printf("result: %f\n", run_method_double(method->max_stack, method->max_locals, method->bytecode));
-		break;      
+		break;
+	case 'L':
+		printf("result: %p\n", run_method_double(method->max_stack, method->max_locals, method->bytecode));
 	}
 
 	free(method->bytecode);
