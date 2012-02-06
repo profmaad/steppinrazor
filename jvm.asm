@@ -272,7 +272,11 @@ constants:
 	
 section .text
 	global run_method
+	global run_method_float
+	global run_method_double
 
+run_method_float:
+run_method_double:
 run_method:
 	push rbp
 	mov rbp, rsp

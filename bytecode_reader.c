@@ -6,11 +6,9 @@
 
 # include <arpa/inet.h>
 
-//extern int run_method(uint16_t max_stack, uint16_t max_locals, uint8_t* bytecode);
-//extern long run_method(uint16_t max_stack, uint16_t max_locals, uint8_t* bytecode);
 extern void* run_method(uint16_t max_stack, uint16_t max_locals, uint8_t* bytecode);
-//extern float run_method(uint16_t max_stack, uint16_t max_locals, uint8_t* bytecode);
-//extern double run_method(uint16_t max_stack, uint16_t max_locals, uint8_t* bytecode);
+extern float run_method_float(uint16_t max_stack, uint16_t max_locals, uint8_t* bytecode);
+extern double run_method_double(uint16_t max_stack, uint16_t max_locals, uint8_t* bytecode);
 
 typedef struct java_method_
 {
@@ -90,21 +88,21 @@ int main(int argc, char **argv)
 	}
 	printf("\n");
 
-	void *result = run_method(method->max_stack, method->max_locals, method->bytecode);
+	
 
 	switch(method->return_type)
 	{
 	case 'I':
-		printf("result: %d\n", (int)result);
+		printf("result: %d\n", (int)run_method(method->max_stack, method->max_locals, method->bytecode));
 		break;
 	case 'J':
-		printf("result: %ld\n", (long)result);
+		printf("result: %ld\n", (long)run_method(method->max_stack, method->max_locals, method->bytecode));
 		break;      
-	case 'F':		
-		printf("result: %f\n", *((float*)&result));
+	case 'F':
+		printf("result: %f\n", run_method_float(method->max_stack, method->max_locals, method->bytecode));
 		break;      
 	case 'D':
-		printf("result: %f\n", *((double*)&result));
+		printf("result: %f\n", run_method_double(method->max_stack, method->max_locals, method->bytecode));
 		break;      
 	}
 
