@@ -253,6 +253,46 @@ class TestInts
 
 		return i;
 	}
+	public static int or()
+	{
+		int i,j;
+
+		i = 64+32+16;
+		j = 16+8+4+2+1;
+		i = i | j;
+
+		return i;
+	}
+	public static int orneg()
+	{
+		int i, j;
+
+		i = -64-32;
+		j = -16-8-4-2-1;
+		i = i | j;
+
+		return i;
+	}
+	public static int xor()
+	{
+		int i,j;
+
+		i = 64+32+16;
+		j = 16+8+4+2+1;
+		i = i ^ j;
+
+		return i;
+	}
+	public static int xorneg()
+	{
+		int i, j;
+
+		i = -64-32;
+		j = -16-8-4-2-1;
+		i = i ^ j;
+
+		return i;
+	}
 
 	public static int iinc()
 	{
