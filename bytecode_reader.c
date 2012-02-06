@@ -7,7 +7,8 @@
 # include <arpa/inet.h>
 
 //extern int run_method(uint16_t max_stack, uint16_t max_locals, uint8_t* bytecode);
-extern long run_method(uint16_t max_stack, uint16_t max_locals, uint8_t* bytecode);
+//extern long run_method(uint16_t max_stack, uint16_t max_locals, uint8_t* bytecode);
+extern void* run_method(uint16_t max_stack, uint16_t max_locals, uint8_t* bytecode);
 //extern float run_method(uint16_t max_stack, uint16_t max_locals, uint8_t* bytecode);
 //extern double run_method(uint16_t max_stack, uint16_t max_locals, uint8_t* bytecode);
 
@@ -15,6 +16,7 @@ typedef struct java_method_
 {
 	uint16_t max_stack;
 	uint16_t max_locals;
+	char return_type;
 	
 	uint32_t bytecode_length;
 	uint8_t *bytecode;
@@ -25,7 +27,7 @@ java_method* read_java_method(FILE *io)
 	long bytecode_length = -1;
 
 	if(fseek(io, 0L, SEEK_END) != 0) { printf("seek\n"); return NULL; }
-	bytecode_length = ftell(io)-4L;
+	bytecode_length = ftell(io)-5L;
 	rewind(io);
 
 	java_method *method = (java_method*)malloc(sizeof(java_method));
@@ -33,6 +35,7 @@ java_method* read_java_method(FILE *io)
 
 	if(fread(&(method->max_stack), sizeof(method->max_stack), 1, io) != 1) { printf("fread(max_stack)\n"); return NULL; }
 	if(fread(&(method->max_locals), sizeof(method->max_locals), 1, io) != 1) { printf("fread(max_locals)\n"); return NULL; }
+	if(fread(&(method->return_type), sizeof(method->return_type), 1, io) != 1) { printf("fread(return_type)\n"); return NULL; }
 
 	method->max_stack = ntohs(method->max_stack);
 	method->max_locals = ntohs(method->max_locals);
@@ -76,6 +79,7 @@ int main(int argc, char **argv)
 
 	printf("max stack: %hu\n", method->max_stack);
 	printf("max locals: %hu\n", method->max_locals);
+	printf("return type: %c\n", method->return_type);
 	printf("bytecode length: %u\n", method->bytecode_length);
 
 	int i;
@@ -86,9 +90,23 @@ int main(int argc, char **argv)
 	}
 	printf("\n");
 
-//	printf("result: %f\n", run_method(method->max_stack, method->max_locals, method->bytecode));
-//	printf("result: %dd\n", run_method(method->max_stack, method->max_locals, method->bytecode));
-	printf("result: %ld\n", run_method(method->max_stack, method->max_locals, method->bytecode));
+	void *result = run_method(method->max_stack, method->max_locals, method->bytecode);
+
+	switch(method->return_type)
+	{
+	case 'I':
+		printf("result: %d\n", (int)result);
+		break;
+	case 'J':
+		printf("result: %ld\n", (long)result);
+		break;      
+	case 'F':		
+		printf("result: %f\n", *((float*)&result));
+		break;      
+	case 'D':
+		printf("result: %f\n", *((double*)&result));
+		break;      
+	}
 
 	free(method->bytecode);
 	free(method);
