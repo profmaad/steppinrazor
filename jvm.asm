@@ -788,6 +788,9 @@ opcode_impl:
 	push 0h
 	jmp run_method.loop	
 .l2i:
+	pop rax
+	mov rax, QWORD [rsp]
+	mov [rsp], eax
 	jmp run_method.loop	
 .l2f:
 	jmp run_method.loop	
