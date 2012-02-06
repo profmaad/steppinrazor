@@ -252,4 +252,25 @@ class TestLongs
 
 		return l;
 	}
+	public static long ushr()
+	{
+		long l;
+
+		l = 1;
+		l = l << 33;
+		l = l >>> 32;
+
+		return l;
+	}
+	public static long ushrneg()
+	{
+		long l;
+
+		l = 0;
+		l -= 1;
+		l = l << 33;
+		l = l >>> 32;
+
+		return l;
+	}
 }

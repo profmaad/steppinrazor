@@ -214,4 +214,24 @@ class TestInts
 
 		return i;
 	}
+	public static int ushr()
+	{
+		int i;
+
+		i = 1;
+		i = i << 30;
+		i = i >>> 29;
+
+		return i;
+	}
+	public static int ushrneg()
+	{
+		int i;
+
+		i = -1;
+		i = i << 30;
+		i = i >>> 29;
+
+		return i;
+	}
 }

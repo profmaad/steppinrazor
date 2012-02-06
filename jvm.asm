@@ -722,8 +722,12 @@ opcode_impl:
 	sar QWORD [rsp+8h], cl
 	jmp run_method.loop	
 .iushr:
+	pop rcx
+	shr DWORD [rsp], cl
 	jmp run_method.loop	
 .lushr:
+	pop rcx
+	shr QWORD [rsp+8h], cl
 	jmp run_method.loop	
 
 .iand:
