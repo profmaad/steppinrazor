@@ -134,21 +134,21 @@ opcodes:
 	dq opcode_impl.ixor
 	dq opcode_impl.lxor
 	dq opcode_impl.iinc
-	dq run_method.loop
-	dq run_method.loop
-	dq run_method.loop
-	dq run_method.loop
-	dq run_method.loop
-	dq run_method.loop
-	dq run_method.loop
-	dq run_method.loop
-	dq run_method.loop
-	dq run_method.loop
-	dq run_method.loop
-	dq run_method.loop
-	dq run_method.loop
-	dq run_method.loop
-	dq run_method.loop
+	dq opcode_impl.i2l
+	dq opcode_impl.i2f
+	dq opcode_impl.i2d
+	dq opcode_impl.l2i
+	dq opcode_impl.l2f
+	dq opcode_impl.l2d
+	dq opcode_impl.f2i
+	dq opcode_impl.f2l
+	dq opcode_impl.f2d
+	dq opcode_impl.d2i
+	dq opcode_impl.d2l
+	dq opcode_impl.d2f
+	dq opcode_impl.i2b
+	dq opcode_impl.i2c
+	dq opcode_impl.i2s
 	dq run_method.loop
 	dq run_method.loop
 	dq run_method.loop
@@ -770,6 +770,46 @@ opcode_impl:
 	movsx rax, al
 	add [r11+rbx*8h], rax
 	add r10, 2h
+	jmp run_method.loop	
+
+.i2l:
+	pop rax
+	cdqe
+	push rax
+	push 0h
+	jmp run_method.loop	
+.i2f:
+	cvtsi2ss xmm0, DWORD [rsp]
+	movss [rsp], xmm0
+	jmp run_method.loop	
+.i2d:
+	cvtsi2sd xmm0, DWORD [rsp]
+	movsd [rsp], xmm0
+	push 0h
+	jmp run_method.loop	
+.l2i:
+	jmp run_method.loop	
+.l2f:
+	jmp run_method.loop	
+.l2d:
+	jmp run_method.loop	
+.f2i:
+	jmp run_method.loop	
+.f2l:
+	jmp run_method.loop	
+.f2d:
+	jmp run_method.loop	
+.d2i:
+	jmp run_method.loop	
+.d2l:
+	jmp run_method.loop	
+.d2f:
+	jmp run_method.loop	
+.i2b:
+	jmp run_method.loop	
+.i2c:
+	jmp run_method.loop	
+.i2s:
 	jmp run_method.loop	
 	
 .return:

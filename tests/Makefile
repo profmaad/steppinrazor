@@ -1,4 +1,4 @@
-all: testdoubles_-init- testfloats_-init- testints_-init- testlongs_-init- teststack_-init-
+all: testdoubles_-init- testfloats_-init- testints_-init- testlongs_-init- teststack_-init- testconversions_-init-
 
 testdoubles_-init-: TestDoubles.class
 	catmother-bytecodeexporter $<
@@ -9,6 +9,8 @@ testints_-init-: TestInts.class
 testlongs_-init-: TestLongs.class
 	catmother-bytecodeexporter $<
 teststack_-init-: TestStack.class
+	catmother-bytecodeexporter $<	
+testconversions_-init-: TestConversions.class
 	catmother-bytecodeexporter $<	
 
 %.class: %.java
