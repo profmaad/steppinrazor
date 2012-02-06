@@ -15,3 +15,8 @@ testconversions_-init-: TestConversions.class
 
 %.class: %.java
 	javac $<
+
+clean:
+	rm -f TestInts.class TestLongs.class TestFloats.class TestDoubles.class TestConversions.class
+	rm -f test*
+
