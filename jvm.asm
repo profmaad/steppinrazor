@@ -1068,14 +1068,8 @@ opcode_impl:
 	jmp run_method.loop
 
 .goto_w:
-	xor rax, rax
-	mov al, BYTE [r10]
-	shl rax, 8
-	mov al, BYTE [r10+1h]
-	shl rax, 8
-	mov al, BYTE [r10+2h]
-	shl rax, 8
-	mov al, BYTE [r10+3h]
+	mov eax, DWORD [r10]
+	bswap eax
 	cdqe
 	add r10, rax
 	sub r10, 1h
