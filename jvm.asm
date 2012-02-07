@@ -169,8 +169,8 @@ opcodes:
 	dq opcode_impl.if_acmpeq
 	dq opcode_impl.if_acmpne
 	dq opcode_impl.goto
-	dq run_method.loop
-	dq run_method.loop
+	dq opcode_impl.jsr
+	dq opcode_impl.ret
 	dq run_method.loop
 	dq run_method.loop
 	dq opcode_impl.ireturn
@@ -1018,6 +1018,16 @@ opcode_impl:
 	movsx rax, ax
 	add r10, rax
 	sub r10, 1h
+	jmp run_method.loop
+
+.jsr:
+	mov rax, [r10]
+	add rax, 2h
+	push rax
+	jmp opcode_impl.goto
+.ret:
+	mov al, [r10]
+	mov r10, [r11+rax*8h]	
 	jmp run_method.loop
 	
 .return:
