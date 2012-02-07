@@ -151,4 +151,19 @@ class TestComparisons
 		
 		return i>j;
 	}
+
+	public static boolean if_acmpeq()
+	{
+		Object a = null;
+		Object b = null;
+
+		return a!=b;
+	}
+	public static boolean if_acmpne()
+	{
+		Object a = null;
+		Object b = null;
+
+		return a==b;
+	}
 }

@@ -166,8 +166,8 @@ opcodes:
 	dq opcode_impl.if_icmpge
 	dq opcode_impl.if_icmpgt
 	dq opcode_impl.if_icmple
-	dq run_method.loop
-	dq run_method.loop
+	dq opcode_impl.if_acmpeq
+	dq opcode_impl.if_acmpne
 	dq opcode_impl.goto
 	dq run_method.loop
 	dq run_method.loop
@@ -994,6 +994,21 @@ opcode_impl:
 	pop rbx
 	cmp ebx, eax
 	jle .goto
+	add r10, 2h
+	jmp run_method.loop
+
+.if_acmpeq:
+	pop rax
+	pop rbx
+	cmp rax, rbx
+	je .goto
+	add r10, 2h
+	jmp run_method.loop
+.if_acmpne:
+	pop rax
+	pop rbx
+	cmp rax, rbx
+	jne .goto
 	add r10, 2h
 	jmp run_method.loop
 	
