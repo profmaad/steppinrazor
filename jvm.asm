@@ -802,10 +802,18 @@ opcode_impl:
 	movsd [rsp+8h], xmm0
 	jmp run_method.loop	
 .f2i:
+	cvttss2si eax, DWORD [rsp]
+	mov DWORD [rsp], eax
 	jmp run_method.loop	
 .f2l:
+	cvttss2si rax, DWORD [rsp]
+	mov QWORD [rsp], rax
+	push 0h
 	jmp run_method.loop	
 .f2d:
+	cvtss2sd xmm0, [rsp]
+	movsd [rsp], xmm0
+	push 0h
 	jmp run_method.loop	
 .d2i:
 	jmp run_method.loop	

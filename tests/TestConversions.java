@@ -99,4 +99,55 @@ class TestConversions
 
 		return d;
 	}
+	
+	public static int f2i()
+	{
+		float f = 2;
+		int i = (int)f;
+
+		return i;
+	}
+	public static int f2ineg()
+	{
+		float f = 0;
+		f -= 2;
+		int i = (int)f;
+
+		return i;
+	}
+	public static int f2itruncate()
+	{
+		float f = 2;
+		f += 1;
+		float g = 2;
+		f = f/g;
+		int i = (int)f;
+
+		return i;
+	}
+	public static long f2l()
+	{
+		float f = 2;
+		long l = (long)f;
+
+		return l;
+	}
+	public static long f2lneg()
+	{
+		float f = 0;
+		f -= 2;
+		long l = (long)f;
+
+		return l;
+	}
+	public static long f2ltruncate()
+	{
+		float f = 2;
+		f += 1;
+		float g = 2;
+		f = f/g;
+		long l = (long)f;
+
+		return l;
+	}
 }
