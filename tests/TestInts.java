@@ -312,4 +312,9 @@ class TestInts
 
 		return i;
 	}
+
+	public static Object areturn()
+	{
+		return null;
+	}
 }

@@ -177,7 +177,7 @@ opcodes:
 	dq opcode_impl.lreturn
 	dq opcode_impl.freturn
 	dq opcode_impl.dreturn
-	dq run_method.loop
+	dq opcode_impl.areturn
 	dq opcode_impl.return
 	dq run_method.loop
 	dq run_method.loop
@@ -1049,4 +1049,7 @@ opcode_impl:
 	xorps xmm0, xmm0
 	movlps xmm0, [rsp+8h]
 	add rsp, 10h
+	jmp run_method.end
+.areturn:
+	pop rax
 	jmp run_method.end
