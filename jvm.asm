@@ -150,10 +150,10 @@ opcodes:
 	dq opcode_impl.i2c
 	dq opcode_impl.i2s
 	dq opcode_impl.lcmp
-	dq run_method.loop
-	dq run_method.loop
-	dq run_method.loop
-	dq run_method.loop
+	dq opcode_impl.fcmpl
+	dq opcode_impl.fcmpg
+	dq opcode_impl.dcmpl
+	dq opcode_impl.dcmpg
 	dq opcode_impl.ifeq
 	dq opcode_impl.ifne
 	dq opcode_impl.iflt
@@ -861,6 +861,62 @@ opcode_impl:
 	add rsp, 18h
 	jmp run_method.loop
 
+.fcmpl:
+	movss xmm0, [rsp+8h]
+	ucomiss xmm0, [rsp]
+	jg .fcmp.greater
+	jl .fcmp.less
+	je .fcmp.equal
+	mov DWORD [rsp+8h], -1h
+	jmp .fcmp.end
+.fcmpg:
+	movss xmm0, [rsp+8h]
+	ucomiss xmm0, [rsp]
+	jg .fcmp.greater
+	jl .fcmp.less
+	je .fcmp.equal
+	mov DWORD [rsp+8h], 1h
+	jmp .fcmp.end
+.fcmp.greater:
+	mov DWORD [rsp+8h], 1h
+	jmp .fcmp.end	
+.fcmp.less:
+	mov DWORD [rsp+8h], -1h
+	jmp .fcmp.end	
+.fcmp.equal:
+	mov DWORD [rsp+8h], 0h
+.fcmp.end:
+	add rsp, 8h
+	jmp run_method.loop
+
+.dcmpl:
+	movss xmm0, [rsp+18h]
+	ucomisd xmm0, [rsp+8h]
+	jg .dcmp.greater
+	jl .dcmp.less
+	je .dcmp.equal
+	mov QWORD [rsp+18h], -1h
+	jmp .dcmp.end
+.dcmpg:
+	movss xmm0, [rsp+18h]
+	ucomisd xmm0, [rsp+8h]
+	jg .dcmp.greater
+	jl .dcmp.less
+	je .dcmp.equal
+	mov QWORD [rsp+18h], 1h
+	jmp .dcmp.end
+.dcmp.greater:
+	mov QWORD [rsp+18h], 1h
+	jmp .fcmp.end	
+.dcmp.less:
+	mov QWORD [rsp+18h], -1h
+	jmp .fcmp.end	
+.dcmp.equal:
+	mov QWORD [rsp+18h], 0h
+.dcmp.end:
+	add rsp, 18h
+	jmp run_method.loop
+	
 .ifeq:
 	pop rax
 	cmp eax, 0h
