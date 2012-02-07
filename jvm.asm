@@ -816,10 +816,18 @@ opcode_impl:
 	push 0h
 	jmp run_method.loop	
 .d2i:
+	pop rax
+	cvttsd2si eax, QWORD [rsp]
+	mov DWORD [rsp], eax
 	jmp run_method.loop	
 .d2l:
+	cvttsd2si rax, QWORD [rsp+8h]
+	mov QWORD [rsp+8h], rax
 	jmp run_method.loop	
 .d2f:
+	pop rax
+	cvtsd2ss xmm0, [rsp]
+	movss [rsp], xmm0
 	jmp run_method.loop	
 .i2b:
 	jmp run_method.loop	

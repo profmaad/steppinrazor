@@ -150,4 +150,113 @@ class TestConversions
 
 		return l;
 	}
+	public static double f2d()
+	{
+		float f = 2;
+		double d = (double)f;
+
+		return d;
+	}
+	public static double f2dneg()
+	{
+		float f = 0;
+		f -= 2;
+		double d = (double)f;
+
+		return d;
+	}
+	public static double f2dfrac()
+	{
+		float f = 2;
+		f += 1;
+		float g = 2;
+		f = f/g;
+
+		double d = (double)f;
+
+		return d;
+	}
+
+	public static int d2i()
+	{
+		double d = 1;
+		int i = (int)d;
+
+		return i;
+	}
+	public static int d2ineg()
+	{
+		double d = 0;
+		d -= 1;
+		int i = (int)d;
+
+		return i;
+	}
+	public static int d2itruncate()
+	{
+		double d = 1;
+		d += 1;
+		d += 1;
+		double e = 1;
+		e += 1;
+		d = d/e;
+		int i = (int)d;
+
+		return i;
+	}
+	public static long d2l()
+	{
+		double d = 1;
+		long l = (long)d;
+
+		return l;
+	}
+	public static long d2lneg()
+	{
+		double d = 0;
+		d -= 1;
+		long l = (long)d;
+
+		return l;
+	}
+	public static long d2ltruncate()
+	{
+		double d = 1;
+		d += 1;
+		d += 1;
+		double e = 1;
+		e += 1;
+		d = d/e;
+		long l = (long)d;
+
+		return l;
+	}
+	public static double d2f()
+	{
+		double d = 1;
+		float f = (float)d;
+
+		return f;
+	}
+	public static double d2fneg()
+	{
+		double d = 0;
+		d -= 1;
+		float f = (float)d;
+
+		return f;
+	}
+	public static double d2ffrac()
+	{
+		double d = 1;
+		d += 1;
+		d += 1;
+		double e = 1;
+		e += 1;
+		d = d/e;
+
+		float f = (float)d;
+
+		return f;
+	}
 }
