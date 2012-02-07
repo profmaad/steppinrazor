@@ -793,8 +793,13 @@ opcode_impl:
 	mov [rsp], eax
 	jmp run_method.loop	
 .l2f:
+	pop rax
+	cvtsi2ss xmm0, QWORD [rsp]
+	movss [rsp], xmm0
 	jmp run_method.loop	
 .l2d:
+	cvtsi2sd xmm0, QWORD [rsp+8h]
+	movsd [rsp+8h], xmm0
 	jmp run_method.loop	
 .f2i:
 	jmp run_method.loop	

@@ -67,4 +67,36 @@ class TestConversions
 
 		return i;
 	}
+	public static float l2f()
+	{
+		long l = 1;
+		l = l << 32;
+		float f = (float)l;
+
+		return f;
+	}
+	public static float l2fneg()
+	{
+		long l = 0;
+		l -= 1;
+		float f = (float)l;
+
+		return f;
+	}
+	public static double l2d()
+	{
+		long l = 1;
+		l = l << 32;
+		double d = (double)l;
+
+		return d;
+	}
+	public static double l2dneg()
+	{
+		long l = 0;
+		l -= 1;
+		double d = (double)l;
+
+		return d;
+	}
 }
