@@ -166,4 +166,17 @@ class TestComparisons
 
 		return a==b;
 	}
+
+	public static boolean ifnull()
+	{
+		Object a = null;
+
+		return a != null;
+	}
+	public static boolean ifnonnull()
+	{
+		Object a = null;
+
+		return a == null;
+	}
 }
