@@ -149,6 +149,17 @@ opcodes:
 	dq opcode_impl.i2b
 	dq opcode_impl.i2c
 	dq opcode_impl.i2s
+	dq opcode_impl.lcmp
+	dq run_method.loop
+	dq run_method.loop
+	dq run_method.loop
+	dq run_method.loop
+	dq opcode_impl.ifeq
+	dq opcode_impl.ifne
+	dq opcode_impl.iflt
+	dq opcode_impl.ifge
+	dq opcode_impl.ifgt
+	dq opcode_impl.ifle
 	dq run_method.loop
 	dq run_method.loop
 	dq run_method.loop
@@ -157,18 +168,7 @@ opcodes:
 	dq run_method.loop
 	dq run_method.loop
 	dq run_method.loop
-	dq run_method.loop
-	dq run_method.loop
-	dq run_method.loop
-	dq run_method.loop
-	dq run_method.loop
-	dq run_method.loop
-	dq run_method.loop
-	dq run_method.loop
-	dq run_method.loop
-	dq run_method.loop
-	dq run_method.loop
-	dq run_method.loop
+	dq opcode_impl.goto
 	dq run_method.loop
 	dq run_method.loop
 	dq run_method.loop
@@ -844,6 +844,67 @@ opcode_impl:
 	movsx rax, ax
 	push rax
 	jmp run_method.loop	
+
+.lcmp:
+	mov rax, [rsp+18h]
+	cmp rax, [rsp+8h]
+	jg .lcmp.greater
+	jl .lcmp.less
+	mov QWORD [rsp+18h], 0h
+	jmp .lcmp.end
+.lcmp.greater:
+	mov QWORD [rsp+18h], 1h
+	jmp .lcmp.end
+.lcmp.less:
+	mov QWORD [rsp+18h], -1h
+.lcmp.end:
+	add rsp, 18h
+	jmp run_method.loop
+
+.ifeq:
+	pop rax
+	cmp eax, 0h
+	je .goto
+	add r10, 2h
+	jmp run_method.loop
+.ifne:
+	pop rax
+	cmp eax, 0h
+	jne .goto
+	add r10, 2h
+	jmp run_method.loop
+.iflt:
+	pop rax
+	cmp eax, 0h
+	jl .goto
+	add r10, 2h
+	jmp run_method.loop
+.ifge:
+	pop rax
+	cmp eax, 0h
+	jge .goto
+	add r10, 2h
+	jmp run_method.loop
+.ifgt:
+	pop rax
+	cmp eax, 0h
+	jg .goto
+	add r10, 2h
+	jmp run_method.loop
+.ifle:
+	pop rax
+	cmp eax, 0h
+	jle .goto
+	add r10, 2h
+	jmp run_method.loop
+
+.goto:
+	mov ax, [r10]
+	xchg al, ah
+	movsx rax, ax
+	add r10, rax
+	sub r10, 1h
+	jmp run_method.loop
 	
 .return:
 	xor rax,rax

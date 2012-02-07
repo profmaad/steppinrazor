@@ -92,6 +92,9 @@ int main(int argc, char **argv)
 
 	switch(method->return_type)
 	{
+	case 'Z':
+		printf("result: %hhu\n", (uint8_t)run_method(method->max_stack, method->max_locals, method->bytecode));
+		break;
 	case 'B':
 		printf("result: %hhd\n", (int8_t)run_method(method->max_stack, method->max_locals, method->bytecode));
 		break;
