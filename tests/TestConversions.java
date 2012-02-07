@@ -259,4 +259,73 @@ class TestConversions
 
 		return f;
 	}
+
+	public static byte i2b()
+	{
+		int i = 23;
+		byte b = (byte)i;
+
+		return b;
+	}
+	public static byte i2bneg()
+	{
+		int i = -23;
+		byte b = (byte)i;
+
+		return b;
+	}
+	public static byte i2btruncate()
+	{
+		int i = 257;
+		byte b = (byte)i;
+
+		return b;
+	}
+
+	public static char i2c()
+	{
+		int i = 23;
+		char c = (char)i;
+
+		return c;
+	}
+	public static char i2cneg()
+	{
+		int i = -23;
+		char c = (char)i;
+
+		return c;
+	}
+	public static char i2ctruncate()
+	{
+		int i = 257;
+		char c = (char)i;
+
+		return c;
+	}
+
+	public static short i2s()
+	{
+		int i = 256;
+		short s = (short)i;
+
+		return s;
+	}
+	public static short i2sneg()
+	{
+		int i = -256;
+		short s = (short)i;
+
+		return s;
+	}
+	public static short i2struncate()
+	{
+		int i = 1;
+		i = i << 16;
+		i += 1;
+
+		short s = (short)i;
+
+		return s;
+	}
 }

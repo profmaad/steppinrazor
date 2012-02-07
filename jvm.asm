@@ -830,10 +830,19 @@ opcode_impl:
 	movss [rsp], xmm0
 	jmp run_method.loop	
 .i2b:
+	pop rax
+	movsx rax, al
+	push rax
 	jmp run_method.loop	
 .i2c:
+	pop rax
+	movzx rax, al
+	push rax
 	jmp run_method.loop	
 .i2s:
+	pop rax
+	movsx rax, ax
+	push rax
 	jmp run_method.loop	
 	
 .return:
