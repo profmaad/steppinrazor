@@ -1034,25 +1034,34 @@ opcode_impl:
 	jmp run_method.loop
 
 .tableswitch:
+	xor rax, rax
 	mov rax, r10
-	sub rax, [rbp-4h]
+	sub rax, [rbp-8h]
 	xor rdx, rdx
 	mov rbx, 4h
 	div rbx
+	cmp rdx, 0h
+	je .tableswitch.2
+	mov rax, rdx
+	mov rdx, 4h
+	sub rdx, rax
+.tableswitch.2:
 	mov eax, DWORD [r10+rdx]
 	bswap eax
 	mov ebx, DWORD [r10+rdx+4h]
 	bswap ebx
 	mov ecx, DWORD [r10+rdx+8h]
 	bswap ecx
+	lea rsi, [r10+rdx+0xC]
 	sub r10, 1h
 	pop rdx
-	cmp ebx, edx
+	cmp edx, ebx
 	jl .tableswitch.default
-	cmp ecx, edx
+	cmp edx, ecx
 	jg .tableswitch.default
-	mov r10, [r10+rdx*4h]
-	jmp run_method.loop
+	sub rdx, rbx
+	mov eax, DWORD [rsi+rdx*4h]
+	bswap eax
 .tableswitch.default:
 	add r10, rax
 	jmp run_method.loop
