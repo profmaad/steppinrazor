@@ -108,4 +108,47 @@ class TestComparisons
 
 		return f>g;
 	}
+
+	public static boolean if_icmpeq()
+	{
+		int i = 23;
+		int j = 42;
+		
+		return i!=j;
+	}
+	public static boolean if_icmpne()
+	{
+		int i = 23;
+		int j = 23;
+		
+		return i==j;
+	}
+	public static boolean if_icmplt()
+	{
+		int i = 23;
+		int j = 42;
+		
+		return j>=i;
+	}
+	public static boolean if_icmpge()
+	{
+		int i = 23;
+		int j = 42;
+		
+		return i<j;
+	}
+	public static boolean if_icmpgt()
+	{
+		int i = 23;
+		int j = 23;
+		
+		return i<=j;
+	}
+	public static boolean if_icmple()
+	{
+		int i = 42;
+		int j = 23;
+		
+		return i>j;
+	}
 }

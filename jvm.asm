@@ -160,12 +160,12 @@ opcodes:
 	dq opcode_impl.ifge
 	dq opcode_impl.ifgt
 	dq opcode_impl.ifle
-	dq run_method.loop
-	dq run_method.loop
-	dq run_method.loop
-	dq run_method.loop
-	dq run_method.loop
-	dq run_method.loop
+	dq opcode_impl.if_icmpeq
+	dq opcode_impl.if_icmpne
+	dq opcode_impl.if_icmplt
+	dq opcode_impl.if_icmpge
+	dq opcode_impl.if_icmpgt
+	dq opcode_impl.if_icmple
 	dq run_method.loop
 	dq run_method.loop
 	dq opcode_impl.goto
@@ -954,6 +954,49 @@ opcode_impl:
 	add r10, 2h
 	jmp run_method.loop
 
+.if_icmpeq:
+	pop rax
+	pop rbx
+	cmp eax, ebx
+	je .goto
+	add r10, 2h
+	jmp run_method.loop
+.if_icmpne:
+	pop rax
+	pop rbx
+	cmp eax, ebx
+	jne .goto
+	add r10, 2h
+	jmp run_method.loop
+.if_icmplt:
+	pop rax
+	pop rbx
+	cmp ebx, eax
+	jl .goto
+	add r10, 2h
+	jmp run_method.loop
+.if_icmpge:
+	pop rax
+	pop rbx
+	cmp ebx, eax
+	jge .goto
+	add r10, 2h
+	jmp run_method.loop
+.if_icmpgt:
+	pop rax
+	pop rbx
+	cmp ebx, eax
+	jg .goto
+	add r10, 2h
+	jmp run_method.loop
+.if_icmple:
+	pop rax
+	pop rbx
+	cmp ebx, eax
+	jle .goto
+	add r10, 2h
+	jmp run_method.loop
+	
 .goto:
 	mov ax, [r10]
 	xchg al, ah
