@@ -864,16 +864,16 @@ opcode_impl:
 .fcmpl:
 	movss xmm0, [rsp+8h]
 	ucomiss xmm0, [rsp]
-	jg .fcmp.greater
-	jl .fcmp.less
+	ja .fcmp.greater
+	jb .fcmp.less
 	je .fcmp.equal
 	mov DWORD [rsp+8h], -1h
 	jmp .fcmp.end
 .fcmpg:
 	movss xmm0, [rsp+8h]
 	ucomiss xmm0, [rsp]
-	jg .fcmp.greater
-	jl .fcmp.less
+	ja .fcmp.greater
+	jb .fcmp.less
 	je .fcmp.equal
 	mov DWORD [rsp+8h], 1h
 	jmp .fcmp.end
@@ -890,27 +890,27 @@ opcode_impl:
 	jmp run_method.loop
 
 .dcmpl:
-	movss xmm0, [rsp+18h]
+	movsd xmm0, [rsp+18h]
 	ucomisd xmm0, [rsp+8h]
-	jg .dcmp.greater
-	jl .dcmp.less
+	ja .dcmp.greater
+	jb .dcmp.less
 	je .dcmp.equal
 	mov QWORD [rsp+18h], -1h
 	jmp .dcmp.end
 .dcmpg:
-	movss xmm0, [rsp+18h]
+	movsd xmm0, [rsp+18h]
 	ucomisd xmm0, [rsp+8h]
-	jg .dcmp.greater
-	jl .dcmp.less
+	ja .dcmp.greater
+	jb .dcmp.less
 	je .dcmp.equal
 	mov QWORD [rsp+18h], 1h
 	jmp .dcmp.end
 .dcmp.greater:
 	mov QWORD [rsp+18h], 1h
-	jmp .fcmp.end	
+	jmp .dcmp.end	
 .dcmp.less:
 	mov QWORD [rsp+18h], -1h
-	jmp .fcmp.end	
+	jmp .dcmp.end	
 .dcmp.equal:
 	mov QWORD [rsp+18h], 0h
 .dcmp.end:

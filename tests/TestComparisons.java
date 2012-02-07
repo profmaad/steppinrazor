@@ -60,4 +60,52 @@ class TestComparisons
 
 		return i>0;
 	}
+
+	public static boolean fcmpequal()
+	{
+		float f = 1;
+		float g = 1;
+
+		return f==g;
+	}
+	public static boolean fcmpless()
+	{
+		float f = 1;
+		float g = 1;
+		g += 1;
+
+		return f<g;
+	}
+	public static boolean fcmpgreater()
+	{
+		float f = 1;
+		f += 1;
+		float g = 1;
+
+		return f>g;
+	}
+
+	public static boolean dcmpequal()
+	{
+		double f = 1;
+		double g = 1;
+
+		return f==g;
+	}
+	public static boolean dcmpless()
+	{
+		double f = 1;
+		double g = 1;
+		g += 1;
+
+		return f<g;
+	}
+	public static boolean dcmpgreater()
+	{
+		double f = 1;
+		f += 1;
+		double g = 1;
+
+		return f>g;
+	}
 }
