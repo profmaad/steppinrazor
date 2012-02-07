@@ -171,7 +171,7 @@ opcodes:
 	dq opcode_impl.goto
 	dq opcode_impl.jsr
 	dq opcode_impl.ret
-	dq run_method.loop
+	dq opcode_impl.tableswitch
 	dq run_method.loop
 	dq opcode_impl.ireturn
 	dq opcode_impl.lreturn
@@ -283,6 +283,9 @@ run_method:
 
 	;; store bytecode pointer
 	mov r10, rdx
+
+	;; store bytecode start address (needed for tableswitch)
+	push r10
 
 	;; reserve space for local variables (4 bytes per slot)
 	lea rax, [rsi*8h]
@@ -1028,6 +1031,30 @@ opcode_impl:
 .ret:
 	mov al, [r10]
 	mov r10, [r11+rax*8h]	
+	jmp run_method.loop
+
+.tableswitch:
+	mov rax, r10
+	sub rax, [rbp-4h]
+	xor rdx, rdx
+	mov rbx, 4h
+	div rbx
+	mov eax, DWORD [r10+rdx]
+	bswap eax
+	mov ebx, DWORD [r10+rdx+4h]
+	bswap ebx
+	mov ecx, DWORD [r10+rdx+8h]
+	bswap ecx
+	sub r10, 1h
+	pop rdx
+	cmp ebx, edx
+	jl .tableswitch.default
+	cmp ecx, edx
+	jg .tableswitch.default
+	mov r10, [r10+rdx*4h]
+	jmp run_method.loop
+.tableswitch.default:
+	add r10, rax
 	jmp run_method.loop
 	
 .return:
