@@ -199,10 +199,10 @@ opcodes:
 	dq run_method.loop
 	dq run_method.loop
 	dq run_method.loop
-	dq run_method.loop
-	dq run_method.loop
-	dq run_method.loop
-	dq run_method.loop
+	dq opcode_impl.ifnull
+	dq opcode_impl.ifnonnull
+	dq opcode_impl.goto_w
+	dq opcode_impl.jsr_w
 	dq run_method.loop
 	dq run_method.loop
 	dq run_method.loop
@@ -1053,3 +1053,33 @@ opcode_impl:
 .areturn:
 	pop rax
 	jmp run_method.end
+
+.ifnull:
+	pop rax
+	cmp rax, 0h
+	je .goto
+	add r10, 2h	
+	jmp run_method.loop
+.ifnonnull:
+	pop rax
+	cmp rax, 0h
+	jne .goto
+	add r10, 2h	
+	jmp run_method.loop
+
+.goto_w:
+	xor rax, rax
+	mov ax, [r10]
+	xchg al, ah
+	shl eax, 16
+	mov ax, [r10+2]
+	xchg al, ah
+	movsx rax, ax
+	add r10, rax
+	sub r10, 1h
+	jmp run_method.loop
+.jsr_w:
+	mov rax, [r10]
+	add rax, 2h
+	push rax
+	jmp opcode_impl.goto_w
