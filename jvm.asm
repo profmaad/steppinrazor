@@ -1069,12 +1069,14 @@ opcode_impl:
 
 .goto_w:
 	xor rax, rax
-	mov ax, [r10]
-	xchg al, ah
-	shl eax, 16
-	mov ax, [r10+2]
-	xchg al, ah
-	movsx rax, ax
+	mov al, BYTE [r10]
+	shl rax, 8
+	mov al, BYTE [r10+1h]
+	shl rax, 8
+	mov al, BYTE [r10+2h]
+	shl rax, 8
+	mov al, BYTE [r10+3h]
+	cdqe
 	add r10, rax
 	sub r10, 1h
 	jmp run_method.loop

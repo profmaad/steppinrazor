@@ -1,4 +1,4 @@
-all: testdoubles_-init- testfloats_-init- testints_-init- testlongs_-init- teststack_-init- testconversions_-init- testcomparisons_-init-
+all: testdoubles_-init- testfloats_-init- testints_-init- testlongs_-init- teststack_-init- testconversions_-init- testcomparisons_-init- testgotow_-init-
 
 testdoubles_-init-: TestDoubles.class
 	catmother-bytecodeexporter $<
@@ -14,11 +14,13 @@ testconversions_-init-: TestConversions.class
 	catmother-bytecodeexporter $<	
 testcomparisons_-init-: TestComparisons.class
 	catmother-bytecodeexporter $<	
+testgotow_-init-: TestGotoW.class
+	catmother-bytecodeexporter $<	
 
 %.class: %.java
 	javac $<
 
 clean:
-	rm -f TestInts.class TestLongs.class TestFloats.class TestDoubles.class TestConversions.class TestComparisons.class
+	rm -f TestInts.class TestLongs.class TestFloats.class TestDoubles.class TestConversions.class TestComparisons.class TestGotoW.class
 	rm -f test*
 
