@@ -172,7 +172,7 @@ opcodes:
 	dq opcode_impl.jsr
 	dq opcode_impl.ret
 	dq opcode_impl.tableswitch
-	dq run_method.loop
+	dq opcode_impl.lookupswitch
 	dq opcode_impl.ireturn
 	dq opcode_impl.lreturn
 	dq opcode_impl.freturn
@@ -1062,7 +1062,45 @@ opcode_impl:
 	sub rdx, rbx
 	mov eax, DWORD [rsi+rdx*4h]
 	bswap eax
+	cdqe
 .tableswitch.default:
+	add r10, rax
+	jmp run_method.loop
+
+.lookupswitch:
+	xor rax, rax
+	mov rax, r10
+	sub rax, [rbp-8h]
+	xor rdx, rdx
+	mov rbx, 4h
+	div rbx
+	cmp rdx, 0h
+	je .lookupswitch.2
+	mov rax, rdx
+	mov rdx, 4h
+	sub rdx, rax
+.lookupswitch.2:
+	mov eax, DWORD [r10+rdx]
+	bswap eax
+	mov ebx, DWORD [r10+rdx+4h]
+	bswap ebx
+	lea rdx, [r10+rdx+8h]
+	sub r10, 1h
+	pop rcx
+	bswap ecx
+.lookupswitch.loop:
+	test ebx, ebx
+	je .lookupswitch.default
+	cmp ecx, DWORD [rdx]
+	je .lookupswitch.match
+	dec ebx	
+	add rdx, 8h
+	jmp .lookupswitch.loop
+.lookupswitch.match:
+	mov eax, DWORD [rdx+4h]
+	bswap eax
+	cdqe
+.lookupswitch.default:
 	add r10, rax
 	jmp run_method.loop
 	
