@@ -9,7 +9,7 @@ all: bytecode_reader
 bytecode_reader: bytecode_reader.o jvm.o
 	$(CC) $(LDFLAGS) $^ -o $@
 
-jvm.o: jvm.asm
+%.o: %.asm
 	$(ASM) $(ASMFLAGS) $< -o $@
 
 %.o: %.c
