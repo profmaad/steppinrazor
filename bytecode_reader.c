@@ -117,7 +117,7 @@ int main(int argc, char **argv)
 		printf("result: %f\n", run_method_double(method->max_stack, method->max_locals, method->bytecode));
 		break;
 	case 'L':
-		printf("result: %p\n", run_method_double(method->max_stack, method->max_locals, method->bytecode));
+		printf("result: %p\n", run_method(method->max_stack, method->max_locals, method->bytecode));
 	}
 
 	free(method->bytecode);
