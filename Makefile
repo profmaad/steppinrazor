@@ -16,5 +16,5 @@ bytecode_reader: bytecode_reader.o jvm.o
 	$(CC) $(CFLAGS) $< -o $@
 
 clean:
-	rm -f jvm.o bytecode_reader.o
+	rm -f *.o
 	rm -f bytecode_reader
