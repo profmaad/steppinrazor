@@ -33,4 +33,6 @@ typedef struct java_class_
 
 const java_class* load_class(FILE *input);
 
+void java_class_free(const java_class *class);
+
 # endif /*STEPPINRAZOR_JAVA_CLASS_H*/

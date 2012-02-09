@@ -22,11 +22,16 @@ int main(int argc, char **argv)
 	}
 
 	const java_class *class = load_class(input);
+	fclose(input);
 	if(!class)
 	{
 		fprintf(stderr, "Failed to load class\n");
 		return 2;
 	}
+	printf("class file version: %hu.%hu\n", class->major_version, class->minor_version);
+	printf("cp count: %hu\n", class->constant_pool_count);
+
+	java_class_free(class);
 	
 	return 0;
 }
