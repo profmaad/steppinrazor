@@ -60,7 +60,8 @@ bool parse_classfile(FILE *input, java_class *class)
 		java_constant_pool_parse(input, &(class->constant_pool_count), &(class->constant_pool)) &&
 		java_class_access_flags_parse(input, class) &&
 		java_class_classrefs_parse(input, class) &&
-		java_class_interfaces_parse(input, class)
+		java_class_interfaces_parse(input, class) &&
+		java_fields_parse(input, &(class->fields_count), &(class->fields))
 		;
 }
 

@@ -44,6 +44,12 @@ int main(int argc, char **argv)
 	}
 	printf("\n");
 
+	printf("\nfields (%hu): \n", class->fields_count);
+	for(i = 0; i < class->fields_count; i++)
+	{
+		printf("%hu, %hu\n", class->fields[i]->name_index, class->fields[i]->descriptor_index);
+	}
+
 	java_class_free(class);
 	
 	return 0;

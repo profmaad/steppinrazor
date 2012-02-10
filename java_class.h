@@ -4,9 +4,7 @@
 # include <stdint.h>
 
 # include "java_constant_pool.h"
-
-struct java_field;
-typedef struct java_field java_field;
+# include "java_field.h"
 
 struct java_method;
 typedef struct java_method java_method;

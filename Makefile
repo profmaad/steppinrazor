@@ -9,7 +9,7 @@ all: bytecode_reader load_classfile
 bytecode_reader: bytecode_reader.o jvm.o
 	$(CC) $(LDFLAGS) $^ -o $@
 
-load_classfile: load_classfile.o java_class.o java_constant_pool.o binary_helpers.o
+load_classfile: load_classfile.o java_class.o java_constant_pool.o java_field.o java_attribute.o binary_helpers.o
 	$(CC) $(LDFLAGS) $^ -o $@
 
 %.o: %.asm
