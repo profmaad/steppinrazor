@@ -33,46 +33,8 @@ bool parse_constant_pool(FILE *input, java_class *class)
 
 	class->constant_pool = (java_constant_pool_entry**)malloc(sizeof(java_constant_pool_entry*) * class->constant_pool_count-1);
 	if(!class->constant_pool) { return false; }
-	
-	int i;
-	for(i = 1; i < class->constant_pool_count; i++)
-	{
-		uint8_t tag;
-		if(!fread_uint8(input, &tag)) { return false; }
-
-		java_constant_pool_entry *entry = NULL;
-
-		switch(tag)
-		{
-		case JAVA_CP_ENTRY_UTF8:
-			break;
-		case JAVA_CP_ENTRY_STRING:
-			break;
-
-		case JAVA_CP_ENTRY_INTEGER:
-			break;
-		case JAVA_CP_ENTRY_FLOAT:
-			break;
-		case JAVA_CP_ENTRY_LONG:
-			break;
-		case JAVA_CP_ENTRY_DOUBLE:
-			break;
-
-		case JAVA_CP_ENTRY_CLASS:
-			break;
-		case JAVA_CP_ENTRY_FIELDREF:
-			break;
-		case JAVA_CP_ENTRY_METHODREF:
-			break;
-		case JAVA_CP_ENTRY_INTERFACEMETHODREF:
-			break;
-
-		case JAVA_CP_ENTRY_NAMEANDTYPE:
-			break;
-		}
-	}
-
-	return true;
+  
+	return java_constant_pool_parse(input, class->constant_pool_count, class->constant_pool);
 }
 
 bool parse_classfile(FILE *input, java_class *class)

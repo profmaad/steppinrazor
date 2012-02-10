@@ -2,6 +2,7 @@
 # define STEPPINRAZOR_JAVA_CONSTANT_POOL_H
 
 # include <stdint.h>
+# include <stdbool.h>
 
 enum java_constant_pool_entry_type
 {
@@ -71,21 +72,23 @@ typedef struct java_constant_pool_entry
 	uint8_t tag;
 	union
 	{
-		java_constant_pool_entry_utf8 utf8;
-		java_constant_pool_entry_string string;
+		java_constant_pool_entry_utf8 *utf8;
+		java_constant_pool_entry_string *string;
 
-     		java_constant_pool_entry_integer const_integer;
-     		java_constant_pool_entry_float const_float;
-     		java_constant_pool_entry_long const_long;
-     		java_constant_pool_entry_double const_double;
+     		java_constant_pool_entry_integer *const_integer;
+     		java_constant_pool_entry_float *const_float;
+     		java_constant_pool_entry_long *const_long;
+     		java_constant_pool_entry_double *const_double;
 
-     		java_constant_pool_entry_class class;
-     		java_constant_pool_entry_fieldref fieldref;
-     		java_constant_pool_entry_methodref methodref;
-     		java_constant_pool_entry_interfacemethodref interfacemethodref;
+     		java_constant_pool_entry_class *classref;
+     		java_constant_pool_entry_fieldref *fieldref;
+     		java_constant_pool_entry_methodref *methodref;
+     		java_constant_pool_entry_interfacemethodref *interfacemethodref;
 
-     		java_constant_pool_entry_nameandtype nameandtype;
+     		java_constant_pool_entry_nameandtype *nameandtype;
 	};
 } java_constant_pool_entry;
+
+bool java_constant_pool_parse(FILE *input, uint16_t num_entries, java_constant_pool_entry **cp);
 
 # endif /*STEPPINRAZOR_JAVA_CONSTANT_POOL_H*/
