@@ -89,5 +89,7 @@ void java_class_free(const java_class *class)
 	if(nonconst_class->constant_pool) { java_constant_pool_free(nonconst_class->constant_pool_count, nonconst_class->constant_pool); }
 	free(nonconst_class->constant_pool);
 
+	free(nonconst_class->interfaces);
+
 	free(nonconst_class);
 }
