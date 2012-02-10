@@ -29,13 +29,20 @@ int main(int argc, char **argv)
 		return 2;
 	}
 	printf("class file version: %hu.%hu\n", class->major_version, class->minor_version);
-	printf("cp: %p\n", class->constant_pool);
 
+	printf("\ncp: %p\n", class->constant_pool);
 	unsigned int i;
 	for(i = 0; i < class->constant_pool_count-1; i++)
 	{
 		printf("[%u] type: %hhu\n", i, class->constant_pool[i]->tag);
 	}
+
+	printf("\ninterfaces (%hu): ", class->interfaces_count);
+	for(i = 0; i < class->interfaces_count; i++)
+	{
+		printf("%hu, ", class->interfaces[i]);
+	}
+	printf("\n");
 
 	java_class_free(class);
 	

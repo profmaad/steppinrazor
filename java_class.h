@@ -5,9 +5,6 @@
 
 # include "java_constant_pool.h"
 
-struct java_interface;
-typedef struct java_interface java_interface;
-
 struct java_field;
 typedef struct java_field java_field;
 
@@ -28,7 +25,7 @@ typedef struct java_class
 	uint16_t super_class;
 	
 	uint16_t interfaces_count;
-	java_interface** interfaces;
+	uint16_t* interfaces;
 
 	uint16_t fields_count;
 	java_field** fields;
