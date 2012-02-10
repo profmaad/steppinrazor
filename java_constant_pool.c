@@ -24,6 +24,20 @@ void java_constant_pool_entry_utf8_free(java_constant_pool_entry_utf8 *entry)
 	free(entry);
 }
 
+bool java_constant_pool_entry_string_parse(FILE *input, java_constant_pool_entry *entry)
+{
+	entry->string = (java_constant_pool_entry_string*)malloc(sizeof(java_constant_pool_entry_string));
+	if(!entry->string) { return false; }
+
+	if(!fread_uint16(input, &(entry->string->index))) { return false; }
+
+	return true;
+}
+void java_constant_pool_entry_string_free(java_constant_pool_entry_string *entry)
+{
+	free(entry);
+}
+
 bool java_constant_pool_parse(FILE *input, uint16_t num_entries, java_constant_pool_entry **cp)
 {
 	int i;
