@@ -27,21 +27,11 @@ bool parse_version_informaton(FILE *input, java_class *class)
 		;
 }
 
-bool parse_constant_pool(FILE *input, java_class *class)
-{
-	if(!fread_uint16(input, &(class->constant_pool_count))) { return false; }
-
-	class->constant_pool = (java_constant_pool_entry**)malloc(sizeof(java_constant_pool_entry*) * class->constant_pool_count-1);
-	if(!class->constant_pool) { return false; }
-  
-	return java_constant_pool_parse(input, class->constant_pool_count, class->constant_pool);
-}
-
 bool parse_classfile(FILE *input, java_class *class)
 {
 	return
 		parse_version_informaton(input, class) &&
-		parse_constant_pool(input, class)
+		java_constant_pool_parse(input, &(class->constant_pool_count), &(class->constant_pool))
 		;
 }
 
@@ -66,6 +56,9 @@ const java_class* load_class(FILE *input)
 void java_class_free(const java_class *class)
 {
 	java_class *nonconst_class = (java_class*)class;
+
+	if(nonconst_class->constant_pool) { java_constant_pool_free(nonconst_class->constant_pool_count, nonconst_class->constant_pool); }
+	free(nonconst_class->constant_pool);
 
 	free(nonconst_class);
 }

@@ -38,3 +38,36 @@ bool fread_uint64(FILE *input, uint64_t *value)
 	*value = be64toh(buffer);
 	return true;
 }
+
+bool fread_float(FILE *input, float *value)
+{
+	uint8_t buffer[4];
+
+	if(fread(buffer, 1, 4, input) != 4) { return false; }
+
+	uint8_t *value_ptr = (uint8_t*)value;
+	*value_ptr++ = buffer[3];
+	*value_ptr++ = buffer[2];
+	*value_ptr++ = buffer[1];
+	*value_ptr++ = buffer[0];
+
+	return true;
+}
+bool fread_double(FILE *input, double *value)
+{
+	uint8_t buffer[8];
+
+	if(fread(buffer, 1, 8, input) != 8) { return false; }
+
+	uint8_t *value_ptr = (uint8_t*)value;
+	*value_ptr++ = buffer[7];
+	*value_ptr++ = buffer[6];
+	*value_ptr++ = buffer[5];
+	*value_ptr++ = buffer[4];
+	*value_ptr++ = buffer[3];
+	*value_ptr++ = buffer[2];
+	*value_ptr++ = buffer[1];
+	*value_ptr++ = buffer[0];
+
+	return true;
+}

@@ -29,7 +29,13 @@ int main(int argc, char **argv)
 		return 2;
 	}
 	printf("class file version: %hu.%hu\n", class->major_version, class->minor_version);
-	printf("cp count: %hu\n", class->constant_pool_count);
+	printf("cp: %p\n", class->constant_pool);
+
+	unsigned int i;
+	for(i = 0; i < class->constant_pool_count-1; i++)
+	{
+		printf("[%u] type: %hhu\n", i, class->constant_pool[i]->tag);
+	}
 
 	java_class_free(class);
 	
