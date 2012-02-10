@@ -3,12 +3,18 @@
 
 # include <stdint.h>
 
-typedef struct java_constant_pool_entry_ java_constant_pool_entry;
-typedef struct java_interface_ java_interface;
-typedef struct java_field_ java_field;
-typedef struct java_method_ java_method;
+# include "java_constant_pool.h"
 
-typedef struct java_class_
+struct java_interface;
+typedef struct java_interface java_interface;
+
+struct java_field;
+typedef struct java_field java_field;
+
+struct java_method;
+typedef struct java_method java_method;
+
+typedef struct java_class
 {
 	uint16_t minor_version;
 	uint16_t major_version;

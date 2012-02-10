@@ -21,52 +21,52 @@ enum java_constant_pool_entry_type
 	JAVA_CP_ENTRY_NAMEANDTYPE = 12
 };
 
-typedef struct java_constant_pool_entry_utf8_
+typedef struct java_constant_pool_entry_utf8
 {
 	uint16_t length;
 	uint8_t *bytes;
 
 } java_constant_pool_entry_utf8;
-struct java_constant_pool_entry_index_
+struct java_constant_pool_entry_index
 {
 	uint16_t index;
 };
-typedef struct java_constant_pool_entry_index_ java_constant_pool_entry_string;
-typedef struct java_constant_pool_entry_index_ java_constant_pool_entry_class;
+typedef struct java_constant_pool_entry_index java_constant_pool_entry_string;
+typedef struct java_constant_pool_entry_index java_constant_pool_entry_class;
 
-typedef struct java_constant_pool_entry_integer_
+typedef struct java_constant_pool_entry_integer
 {
 	uint32_t value;
 } java_constant_pool_entry_integer;
-typedef struct java_constant_pool_entry_float_
+typedef struct java_constant_pool_entry_float
 {
 	float value;
 } java_constant_pool_entry_float;
-typedef struct java_constant_pool_entry_long_
+typedef struct java_constant_pool_entry_long
 {
 	uint64_t value;
 } java_constant_pool_entry_long;
-typedef struct java_constant_pool_entry_double_
+typedef struct java_constant_pool_entry_double
 {
 	double value;
 } java_constant_pool_entry_double;
 
-struct java_constant_pool_entry_classmember_
+struct java_constant_pool_entry_classmember
 {
 	uint16_t class_index;
 	uint16_t name_and_type_index;
 };
-typedef struct java_constant_pool_entry_classmember_ java_constant_pool_entry_fieldref;
-typedef struct java_constant_pool_entry_classmember_ java_constant_pool_entry_methodref;
-typedef struct java_constant_pool_entry_classmember_ java_constant_pool_entry_interfacemethodref;
+typedef struct java_constant_pool_entry_classmember java_constant_pool_entry_fieldref;
+typedef struct java_constant_pool_entry_classmember java_constant_pool_entry_methodref;
+typedef struct java_constant_pool_entry_classmember java_constant_pool_entry_interfacemethodref;
 
-typedef struct java_constant_pool_entry_nameandtype_
+typedef struct java_constant_pool_entry_nameandtype
 {
 	uint16_t name_index;
 	uint16_t descriptor_index;
 } java_constant_pool_entry_nameandtype;
 
-typedef struct java_constant_pool_entry_
+typedef struct java_constant_pool_entry
 {
 	uint8_t tag;
 	union
