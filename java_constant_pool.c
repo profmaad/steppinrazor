@@ -187,6 +187,9 @@ bool java_constant_pool_parse(FILE *input, uint16_t *cp_count, java_constant_poo
 		if(!entry) { return false; }
 
 		if(!java_constant_pool_entry_parse(input, entry)) { return false; }
+
+		if( (entry->tag == JAVA_CP_ENTRY_DOUBLE) || (entry->tag == JAVA_CP_ENTRY_LONG) )
+		{ i++; }
 		
 		(*cp)[i] = entry;
 	}

@@ -34,7 +34,10 @@ int main(int argc, char **argv)
 	unsigned int i;
 	for(i = 0; i < class->constant_pool_count-1; i++)
 	{
-		printf("[%u] type: %hhu\n", i, class->constant_pool[i]->tag);
+		if(class->constant_pool[i])
+		{
+			printf("[%u] type: %hhu\n", i, class->constant_pool[i]->tag);
+		}
 	}
 
 	printf("\ninterfaces (%hu): ", class->interfaces_count);
@@ -48,6 +51,25 @@ int main(int argc, char **argv)
 	for(i = 0; i < class->fields_count; i++)
 	{
 		printf("%hu, %hu\n", class->fields[i]->name_index, class->fields[i]->descriptor_index);
+		if(class->fields[i]->value_tag > 0)
+		{
+			printf("\t value(%hhu): ", class->fields[i]->value_tag);
+			switch(class->fields[i]->value_tag)
+			{
+			case JAVA_CP_ENTRY_INTEGER:
+				printf("%d\n", class->fields[i]->int_value);
+				break;
+			case JAVA_CP_ENTRY_FLOAT:
+				printf("%f\n", class->fields[i]->float_value);
+				break;
+			case JAVA_CP_ENTRY_LONG:
+				printf("%ld\n", class->fields[i]->long_value);
+				break;
+			case JAVA_CP_ENTRY_DOUBLE:
+				printf("%f\n", class->fields[i]->double_value);
+				break;
+			}
+		}
 	}
 
 	java_class_free(class);

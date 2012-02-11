@@ -14,6 +14,7 @@ typedef struct java_field
 
 	uint16_t attributes_count;
 	
+	uint8_t value_tag;
 	union
 	{
 		uint32_t int_value;
@@ -23,7 +24,6 @@ typedef struct java_field
 	};
 } java_field;
 
-bool java_field_parse(FILE *input, java_field *field);
-bool java_fields_parse(FILE *input, uint16_t *fields_count, java_field ***fields);
+bool java_fields_parse(FILE *input, uint16_t *fields_count, java_field ***fields, java_constant_pool_entry **cp);
 
 # endif /*STEPPINRAZOR_JAVA_FIELD_H*/
