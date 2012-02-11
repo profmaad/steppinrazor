@@ -72,6 +72,12 @@ int main(int argc, char **argv)
 		}
 	}
 
+	printf("\nmethods (%hu): \n", class->methods_count);
+	for(i = 0; i < class->methods_count; i++)
+	{
+		printf("%hu, %hu\n", class->methods[i]->name_index, class->methods[i]->descriptor_index);
+	}
+
 	java_class_free(class);
 	
 	return 0;
