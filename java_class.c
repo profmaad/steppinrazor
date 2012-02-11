@@ -7,6 +7,7 @@
 # include "binary_helpers.h"
 # include "java_class.h"
 # include "java_constant_pool.h"
+# include "java_field.h"
 
 # define JAVA_CLASSFILE_MAGIC_VALUE "\xCA\xFE\xBA\xBE"
 
@@ -89,8 +90,11 @@ void java_class_free(const java_class *class)
 
 	if(nonconst_class->constant_pool) { java_constant_pool_free(nonconst_class->constant_pool_count, nonconst_class->constant_pool); }
 	free(nonconst_class->constant_pool);
-
+	
 	free(nonconst_class->interfaces);
 
+	if(nonconst_class->fields) { java_fields_free(nonconst_class->fields_count, nonconst_class->fields); }
+	free(nonconst_class->fields);
+	
 	free(nonconst_class);
 }

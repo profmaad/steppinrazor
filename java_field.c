@@ -74,3 +74,11 @@ bool java_fields_parse(FILE *input, uint16_t *fields_count, java_field ***fields
 
 	return true;	
 }
+void java_fields_free(uint16_t fields_count, java_field **fields)
+{
+	int i;
+	for(i = 0; i < fields_count; i++)
+	{
+		if(fields[i]) { free(fields[i]); }
+	}
+}

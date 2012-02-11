@@ -25,5 +25,6 @@ typedef struct java_field
 } java_field;
 
 bool java_fields_parse(FILE *input, uint16_t *fields_count, java_field ***fields, java_constant_pool_entry **cp);
+void java_fields_free(uint16_t fields_count, java_field **fields);
 
 # endif /*STEPPINRAZOR_JAVA_FIELD_H*/
