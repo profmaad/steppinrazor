@@ -62,7 +62,8 @@ bool parse_classfile(FILE *input, java_class *class)
 		java_class_access_flags_parse(input, class) &&
 		java_class_classrefs_parse(input, class) &&
 		java_class_interfaces_parse(input, class) &&
-		java_fields_parse(input, &(class->fields_count), &(class->fields), class->constant_pool)
+		java_fields_parse(input, &(class->fields_count), &(class->fields), class->constant_pool) &&
+		java_methods_parse(input, &(class->methods_count), &(class->methods))
 		;
 }
 
@@ -95,6 +96,9 @@ void java_class_free(const java_class *class)
 
 	if(nonconst_class->fields) { java_fields_free(nonconst_class->fields_count, nonconst_class->fields); }
 	free(nonconst_class->fields);
+
+	if(nonconst_class->methods) { java_methods_free(nonconst_class->methods_count, nonconst_class->methods); }
+	free(nonconst_class->methods);
 	
 	free(nonconst_class);
 }

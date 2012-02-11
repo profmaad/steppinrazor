@@ -5,9 +5,7 @@
 
 # include "java_constant_pool.h"
 # include "java_field.h"
-
-struct java_method;
-typedef struct java_method java_method;
+# include "java_method.h"
 
 typedef struct java_class
 {
