@@ -2,6 +2,7 @@
 # define STEPPINRAZOR_JAVA_CLASS_H
 
 # include <stdint.h>
+# include <stdbool.h>
 
 # include "java_constant_pool.h"
 # include "java_field.h"
@@ -28,6 +29,9 @@ typedef struct java_class
 
 	uint16_t methods_count;
 	java_method** methods;
+
+	bool synthetic;
+	
 } java_class;
 
 const java_class* load_class(FILE *input);

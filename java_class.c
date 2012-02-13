@@ -76,6 +76,8 @@ const java_class* load_class(FILE *input)
 	class = (java_class*)malloc(sizeof(java_class));
 	if(!class) { return NULL; }
 	
+	class->synthetic = false;
+
 	if(!parse_classfile(input, class))
 	{
 		java_class_free(class);
