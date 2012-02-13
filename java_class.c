@@ -63,7 +63,7 @@ bool parse_classfile(FILE *input, java_class *class)
 		java_class_classrefs_parse(input, class) &&
 		java_class_interfaces_parse(input, class) &&
 		java_fields_parse(input, &(class->fields_count), &(class->fields), class->constant_pool) &&
-		java_methods_parse(input, &(class->methods_count), &(class->methods))
+		java_methods_parse(input, &(class->methods_count), &(class->methods), class->constant_pool)
 		;
 }
 
