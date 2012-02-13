@@ -125,12 +125,12 @@ long java_attribute_findmultiple(FILE *input, uint16_t attributes_count, java_co
 			}
 		}
 		
-		if(!java_attribute_skip(input, true)) { end_pos = -1; printf("skip\n");  break; }
+		if(!java_attribute_skip(input, true)) { end_pos = -1; break; }
 	}
 
 	if(end_pos < 0)
 	{
-		fseek(input, SEEK_SET, initial_pos);
+		fseek(input, initial_pos, SEEK_SET);
 		return -1;
 	}
 

@@ -76,6 +76,21 @@ int main(int argc, char **argv)
 	for(i = 0; i < class->methods_count; i++)
 	{
 		printf("%hu, %hu\n", class->methods[i]->name_index, class->methods[i]->descriptor_index);
+
+		if(class->methods[i]->code)
+		{
+			printf("\tcode: %hu, %hu, %u, %hu\n", class->methods[i]->code->max_stack, class->methods[i]->code->max_locals, class->methods[i]->code->code_length, class->methods[i]->code->exception_handlers_count);
+		}
+		if(class->methods[i]->exceptions)
+		{
+			printf("\texceptions: ");
+			int j;
+			for(j = 0; j < class->methods[i]->exceptions_count; j++)
+			{
+				printf("%hu, ", class->methods[i]->exceptions[j]);
+			}
+			printf("\n");
+		}
 	}
 
 	java_class_free(class);
