@@ -6,9 +6,7 @@
 
 # include <arpa/inet.h>
 
-extern void* run_method(uint16_t max_stack, uint16_t max_locals, uint8_t* bytecode);
-extern float run_method_float(uint16_t max_stack, uint16_t max_locals, uint8_t* bytecode);
-extern double run_method_double(uint16_t max_stack, uint16_t max_locals, uint8_t* bytecode);
+# include "jvm.h"
 
 typedef struct java_method_
 {
