@@ -41,6 +41,8 @@ typedef struct java_method
 	uint16_t exceptions_count;
 	uint16_t *exceptions;
 
+	bool synthetic;
+
 } java_method;
 
 bool java_methods_parse(FILE *input, uint16_t *methods_count, java_method ***methods, java_constant_pool_entry **cp);

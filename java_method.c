@@ -9,6 +9,8 @@
 
 bool java_method_parse(FILE *input, java_method *method, java_constant_pool_entry **cp)
 {
+	method->synthetic = false;
+
 	if(!(
 		   fread_uint16(input, &(method->access_flags)) &&
 		   fread_uint16(input, &(method->name_index)) &&
@@ -19,9 +21,10 @@ bool java_method_parse(FILE *input, java_method *method, java_constant_pool_entr
 
 	long code_attr_pos = -1;
 	long exceptions_attr_pos = -1;
+	long synthetic_attr_pos = -1;
 	long attributes_end = -1;
 
-	attributes_end = java_attribute_findmultiple(input, method->attributes_count, cp, "Code", &code_attr_pos, "Exceptions", &exceptions_attr_pos, NULL);
+	attributes_end = java_attribute_findmultiple(input, method->attributes_count, cp, "Code", &code_attr_pos, "Exceptions", &exceptions_attr_pos, "Synthetic", &synthetic_attr_pos, NULL);
 	if(attributes_end < 0) { return false; }
 
 	if(code_attr_pos >= 0 && (fseek(input, code_attr_pos+4, SEEK_SET) == 0))
@@ -77,6 +80,8 @@ bool java_method_parse(FILE *input, java_method *method, java_constant_pool_entr
 			if(!fread_uint16(input, &(method->exceptions[i]))) { return false; }
 		}
 	}
+
+	if(synthetic_attr_pos >= 0) { method->synthetic = true; }
 
 	fseek(input, attributes_end, SEEK_SET);
 

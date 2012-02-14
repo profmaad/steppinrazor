@@ -29,6 +29,7 @@ int main(int argc, char **argv)
 		return 2;
 	}
 	printf("class file version: %hu.%hu\n", class->major_version, class->minor_version);
+	if(class->synthetic) { printf("\tis synthetic\n"); }
 
 	printf("\ncp: %p\n", class->constant_pool);
 	unsigned int i;
@@ -51,6 +52,7 @@ int main(int argc, char **argv)
 	for(i = 0; i < class->fields_count; i++)
 	{
 		printf("%hu, %hu\n", class->fields[i]->name_index, class->fields[i]->descriptor_index);
+		if(class->fields[i]->synthetic) { printf("\tis synthetic\n"); }
 		if(class->fields[i]->value_tag > 0)
 		{
 			printf("\t value(%hhu): ", class->fields[i]->value_tag);
@@ -81,6 +83,7 @@ int main(int argc, char **argv)
 		{
 			printf("\tcode: %hu, %hu, %u, %hu\n", class->methods[i]->code->max_stack, class->methods[i]->code->max_locals, class->methods[i]->code->code_length, class->methods[i]->code->exception_handlers_count);
 		}
+		if(class->methods[i]->synthetic) { printf("\tis synthetic\n"); }
 		if(class->methods[i]->exceptions)
 		{
 			printf("\texceptions: ");

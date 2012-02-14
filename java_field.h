@@ -22,6 +22,9 @@ typedef struct java_field
 		float float_value;
 		double double_value;
 	};
+
+	bool synthetic;
+
 } java_field;
 
 bool java_fields_parse(FILE *input, uint16_t *fields_count, java_field ***fields, java_constant_pool_entry **cp);

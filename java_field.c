@@ -7,6 +7,8 @@
 
 bool java_field_parse(FILE *input, java_field *field, java_constant_pool_entry **cp)
 {
+	field->synthetic = false;
+
 	if(!(
 		   fread_uint16(input, &(field->access_flags)) &&
 		   fread_uint16(input, &(field->name_index)) &&
@@ -16,11 +18,16 @@ bool java_field_parse(FILE *input, java_field *field, java_constant_pool_entry *
 	{ return false; }
 
 	uint16_t cp_index;
-	uint16_t attributes_left = field->attributes_count;
-	if(java_attribute_find(input, field->attributes_count, "ConstantValue", cp, &attributes_left))
+	long attributes_end = -1;
+	long constant_value_attr_pos = -1;
+	long synthetic_attr_pos = -1;
+
+	attributes_end = java_attribute_findmultiple(input, field->attributes_count, cp, "ConstantValue", &constant_value_attr_pos, "Synthetic", &synthetic_attr_pos, NULL);
+	if(attributes_end < 0) { return false; }
+	
+	if(constant_value_attr_pos >= 0 && (fseek(input, constant_value_attr_pos+4, SEEK_SET) == 0))
 	{		
 		if(!(
-			   (fseek(input, 4, SEEK_CUR) == 0) &&
 			   fread_uint16(input, &cp_index) &&
 			   cp[cp_index]
 			   ))
@@ -48,8 +55,10 @@ bool java_field_parse(FILE *input, java_field *field, java_constant_pool_entry *
 			return false;
 		}
 	}
+	
+	if(synthetic_attr_pos >= 0) { field->synthetic = true; }
 
-	java_attribute_skipall(input, attributes_left);
+	if(fseek(input, attributes_end, SEEK_SET) != 0) { return false; }
 
 	return true;
 }

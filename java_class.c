@@ -8,6 +8,7 @@
 # include "java_class.h"
 # include "java_constant_pool.h"
 # include "java_field.h"
+# include "java_attribute.h"
 
 # define JAVA_CLASSFILE_MAGIC_VALUE "\xCA\xFE\xBA\xBE"
 
@@ -53,6 +54,20 @@ bool java_class_interfaces_parse(FILE *input, java_class *class)
 
 	return true;
 }
+bool java_class_attributes_parse(FILE *input, java_class *class)
+{
+	uint16_t attributes_count = 0;
+	long synthetic_attr_pos = -1;
+
+	if(!fread_uint16(input, &attributes_count)) { return false; }
+
+	if(java_attribute_findmultiple(input, attributes_count, class->constant_pool, "Synthetic", &synthetic_attr_pos, NULL) < 0)
+	{ return false; }
+
+	if(synthetic_attr_pos >= 0) { class->synthetic = true; }
+
+	return true;
+}
 
 bool parse_classfile(FILE *input, java_class *class)
 {
@@ -63,7 +78,8 @@ bool parse_classfile(FILE *input, java_class *class)
 		java_class_classrefs_parse(input, class) &&
 		java_class_interfaces_parse(input, class) &&
 		java_fields_parse(input, &(class->fields_count), &(class->fields), class->constant_pool) &&
-		java_methods_parse(input, &(class->methods_count), &(class->methods), class->constant_pool)
+		java_methods_parse(input, &(class->methods_count), &(class->methods), class->constant_pool) &&
+		java_class_attributes_parse(input, class)
 		;
 }
 
