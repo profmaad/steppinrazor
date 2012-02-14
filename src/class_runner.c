@@ -14,11 +14,20 @@ int main(int argc, char **argv)
 {
 	if(argc < 2)
 	{
-		printf("Usage: %s <inputfile>\n", argv[0]);
+		printf("Usage: %s <inputfile> [<method>]\n", argv[0]);
 		return 1;
 	}
 
 	const char *input_filename = argv[1];
+	const char *method_name = NULL;
+	if(argc > 2)
+	{
+		method_name = argv[2];
+	}
+	else
+	{
+		method_name = "main";
+	}
 
 	FILE *input = NULL;
 
@@ -45,7 +54,7 @@ int main(int argc, char **argv)
 	java_method *method = NULL;
 	for(i = 0; i < class->methods_count; i++)
 	{
-		if(class->constant_pool[class->methods[i]->name_index]->utf8->length == 4 && (strncmp((const char*)class->constant_pool[class->methods[i]->name_index]->utf8->bytes, "main", 4) == 0))
+		if(class->constant_pool[class->methods[i]->name_index]->utf8->length == strlen(method_name) && (strncmp((const char*)class->constant_pool[class->methods[i]->name_index]->utf8->bytes, method_name, class->constant_pool[class->methods[i]->name_index]->utf8->length) == 0))
 		{
 			method = class->methods[i];
 			break;
@@ -53,7 +62,7 @@ int main(int argc, char **argv)
 	}
 	if(!method)
 	{
-		fprintf(stderr, "No main method found\n");
+		fprintf(stderr, "No method '%s' found\n", method_name);
 		return 3;
 	}
 
