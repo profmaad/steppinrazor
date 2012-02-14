@@ -54,6 +54,33 @@ bool java_class_interfaces_parse(FILE *input, java_class *class)
 
 	return true;
 }
+
+bool java_class_innerclasses_parse(FILE *input, java_class *class)
+{
+	if(!fread_uint16(input, &(class->inner_classes_count))) { return false; }
+
+	class->inner_classes = (java_inner_class**)malloc(sizeof(java_inner_class*) * class->inner_classes_count);
+	if(!class->inner_classes) { return false; }
+
+	int i;
+	for(i = 0; i < class->inner_classes_count; i++)
+	{
+		java_inner_class *inner_class = (java_inner_class*)malloc(sizeof(java_inner_class));
+		if(!inner_class) { return false; }
+
+		if(!(
+			   fread_uint16(input, &(inner_class->inner_class_info_index)) &&
+			   fread_uint16(input, &(inner_class->outer_class_info_index)) &&
+			   fread_uint16(input, &(inner_class->inner_name_index)) &&
+			   fread_uint16(input, &(inner_class->access_flags))
+			   ))
+		{ return false; }
+
+		class->inner_classes[i] = inner_class;
+	}
+
+	return true;
+}
 bool java_class_attributes_parse(FILE *input, java_class *class)
 {
 	uint16_t attributes_count = 0;
@@ -67,29 +94,14 @@ bool java_class_attributes_parse(FILE *input, java_class *class)
 
 	if(synthetic_attr_pos >= 0) { class->synthetic = true; }
 
-	if(innerclasses_attr_pos >= 0 && (fseek(input, innerclasses_attr_pos+4, SEEK_SET) == 0))
+	if(innerclasses_attr_pos != 0 &&
+	   !(
+		   (fseek(input, innerclasses_attr_pos+4, SEEK_SET) == 0) &&
+		   java_class_innerclasses_parse(input, class)
+		   )
+		)
 	{
-		if(!fread_uint16(input, &(class->inner_classes_count))) { return false; }
-
-		class->inner_classes = (java_inner_class**)malloc(sizeof(java_inner_class*) * class->inner_classes_count);
-		if(!class->inner_classes) { return false; }
-
-		int i;
-		for(i = 0; i < class->inner_classes_count; i++)
-		{
-			java_inner_class *inner_class = (java_inner_class*)malloc(sizeof(java_inner_class));
-			if(!inner_class) { return false; }
-
-			if(!(
-				   fread_uint16(input, &(inner_class->inner_class_info_index)) &&
-				   fread_uint16(input, &(inner_class->outer_class_info_index)) &&
-				   fread_uint16(input, &(inner_class->inner_name_index)) &&
-				   fread_uint16(input, &(inner_class->access_flags))
-				   ))
-			{ return false; }
-
-			class->inner_classes[i] = inner_class;
-		}
+		return false;
 	}
 
 	return true;
@@ -129,6 +141,14 @@ const java_class* load_class(FILE *input)
 	return class;
 }
 
+void java_class_innerclasses_free(uint16_t inner_classes_count, java_inner_class **inner_classes)
+{
+	int i;
+	for(i = 0; i < inner_classes_count; i++)
+	{
+		if(inner_classes[i]) { free(inner_classes[i]); }
+	}
+}
 void java_class_free(const java_class *class)
 {
 	java_class *nonconst_class = (java_class*)class;
@@ -143,6 +163,9 @@ void java_class_free(const java_class *class)
 
 	if(nonconst_class->methods) { java_methods_free(nonconst_class->methods_count, nonconst_class->methods); }
 	free(nonconst_class->methods);
+
+	if(nonconst_class->inner_classes) { java_class_innerclasses_free(nonconst_class->inner_classes_count,  nonconst_class->inner_classes); }
+	free(nonconst_class->inner_classes);
 	
 	free(nonconst_class);
 }
