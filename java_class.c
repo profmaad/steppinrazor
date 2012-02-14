@@ -58,13 +58,39 @@ bool java_class_attributes_parse(FILE *input, java_class *class)
 {
 	uint16_t attributes_count = 0;
 	long synthetic_attr_pos = -1;
+	long innerclasses_attr_pos = -1;
 
 	if(!fread_uint16(input, &attributes_count)) { return false; }
 
-	if(java_attribute_findmultiple(input, attributes_count, class->constant_pool, "Synthetic", &synthetic_attr_pos, NULL) < 0)
+	if(java_attribute_findmultiple(input, attributes_count, class->constant_pool, "Synthetic", &synthetic_attr_pos, "InnerClasses", &innerclasses_attr_pos, NULL) < 0)
 	{ return false; }
 
 	if(synthetic_attr_pos >= 0) { class->synthetic = true; }
+
+	if(innerclasses_attr_pos >= 0 && (fseek(input, innerclasses_attr_pos+4, SEEK_SET) == 0))
+	{
+		if(!fread_uint16(input, &(class->inner_classes_count))) { return false; }
+
+		class->inner_classes = (java_inner_class**)malloc(sizeof(java_inner_class*) * class->inner_classes_count);
+		if(!class->inner_classes) { return false; }
+
+		int i;
+		for(i = 0; i < class->inner_classes_count; i++)
+		{
+			java_inner_class *inner_class = (java_inner_class*)malloc(sizeof(java_inner_class));
+			if(!inner_class) { return false; }
+
+			if(!(
+				   fread_uint16(input, &(inner_class->inner_class_info_index)) &&
+				   fread_uint16(input, &(inner_class->outer_class_info_index)) &&
+				   fread_uint16(input, &(inner_class->inner_name_index)) &&
+				   fread_uint16(input, &(inner_class->access_flags))
+				   ))
+			{ return false; }
+
+			class->inner_classes[i] = inner_class;
+		}
+	}
 
 	return true;
 }

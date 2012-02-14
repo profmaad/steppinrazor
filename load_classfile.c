@@ -96,6 +96,15 @@ int main(int argc, char **argv)
 		}
 	}
 
+	if(class->inner_classes)
+	{
+		printf("\ninner classes (%hu): \n", class->inner_classes_count);
+		for(i = 0; i < class->inner_classes_count; i++)
+		{
+			printf("%hu, %hu, %hu\n", class->inner_classes[i]->inner_class_info_index, class->inner_classes[i]->outer_class_info_index, class->inner_classes[i]->inner_name_index);
+		}
+	}
+
 	java_class_free(class);
 	
 	return 0;

@@ -8,6 +8,16 @@
 # include "java_field.h"
 # include "java_method.h"
 
+typedef struct java_inner_class
+{
+	uint16_t inner_class_info_index;
+	uint16_t outer_class_info_index;
+
+	uint16_t inner_name_index;
+	uint16_t access_flags;
+
+} java_inner_class;
+
 typedef struct java_class
 {
 	uint16_t minor_version;
@@ -31,6 +41,9 @@ typedef struct java_class
 	java_method** methods;
 
 	bool synthetic;
+
+	uint16_t inner_classes_count;
+	java_inner_class **inner_classes;
 	
 } java_class;
 
