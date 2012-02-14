@@ -33,7 +33,7 @@ int main(int argc, char **argv)
 
 	printf("\ncp: %p\n", class->constant_pool);
 	unsigned int i;
-	for(i = 0; i < class->constant_pool_count-1; i++)
+	for(i = 1; i < class->constant_pool_count; i++)
 	{
 		if(class->constant_pool[i])
 		{
@@ -102,6 +102,18 @@ int main(int argc, char **argv)
 		for(i = 0; i < class->inner_classes_count; i++)
 		{
 			printf("%hu, %hu, %hu\n", class->inner_classes[i]->inner_class_info_index, class->inner_classes[i]->outer_class_info_index, class->inner_classes[i]->inner_name_index);
+		}
+	}
+
+	if(class->runtime_cp)
+	{
+		printf("\nruntime cp:\n");
+		for(i = 1; i < class->constant_pool_count; i++)
+		{
+			if(class->runtime_cp[i])
+			{
+				printf("\t[%u] (%hhu)\n", i, class->runtime_cp_types[i]);
+			}
 		}
 	}
 

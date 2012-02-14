@@ -5,6 +5,7 @@
 # include <stdbool.h>
 
 # include "java_constant_pool.h"
+# include "java_runtime_constant_pool.h"
 # include "java_field.h"
 # include "java_method.h"
 
@@ -24,7 +25,9 @@ typedef struct java_class
 	uint16_t major_version;
 
 	uint16_t constant_pool_count;
-	java_constant_pool_entry** constant_pool;
+	java_constant_pool_entry **constant_pool;
+	java_runtime_constant_pool_entry **runtime_cp;
+	uint8_t *runtime_cp_types;
 
 	uint16_t access_flags;
 
@@ -32,13 +35,13 @@ typedef struct java_class
 	uint16_t super_class;
 	
 	uint16_t interfaces_count;
-	uint16_t* interfaces;
+	uint16_t *interfaces;
 
 	uint16_t fields_count;
-	java_field** fields;
+	java_field **fields;
 
 	uint16_t methods_count;
-	java_method** methods;
+	java_method **methods;
 
 	bool synthetic;
 

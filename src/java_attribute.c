@@ -51,8 +51,6 @@ bool java_attribute_find(FILE *input, uint16_t attributes_count, const char *nam
 	{
 		if(!fread_uint16(input, &name_index)) { break; }
 
-		name_index -= 1;
-
 		if(cp[name_index] &&
 		   cp[name_index]->utf8 &&
 		   (cp[name_index]->utf8->length == name_len) &&
@@ -112,7 +110,6 @@ long java_attribute_findmultiple(FILE *input, uint16_t attributes_count, java_co
 	{
 		if(!fread_uint16(input, &name_index)) { end_pos = -1; break; }
 
-		name_index -= 1;
 		if(cp[name_index] && cp[name_index]->utf8)
 		{			
 			for(j = 0; j < params_count; j++)

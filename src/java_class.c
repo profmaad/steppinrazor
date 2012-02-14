@@ -94,7 +94,7 @@ bool java_class_attributes_parse(FILE *input, java_class *class)
 
 	if(synthetic_attr_pos >= 0) { class->synthetic = true; }
 
-	if(innerclasses_attr_pos != 0 &&
+	if(innerclasses_attr_pos >= 0 &&
 	   !(
 		   (fseek(input, innerclasses_attr_pos+4, SEEK_SET) == 0) &&
 		   java_class_innerclasses_parse(input, class)
@@ -117,7 +117,8 @@ bool parse_classfile(FILE *input, java_class *class)
 		java_class_interfaces_parse(input, class) &&
 		java_fields_parse(input, &(class->fields_count), &(class->fields), class->constant_pool) &&
 		java_methods_parse(input, &(class->methods_count), &(class->methods), class->constant_pool) &&
-		java_class_attributes_parse(input, class)
+		java_class_attributes_parse(input, class) &&
+		java_runtime_constant_pool_construct(class->constant_pool_count, class->constant_pool, &(class->runtime_cp), &(class->runtime_cp_types))
 		;
 }
 
@@ -134,7 +135,7 @@ const java_class* load_class(FILE *input)
 
 	if(!parse_classfile(input, class))
 	{
-		java_class_free(class);
+       		java_class_free(class);
 		return NULL;
 	}
 

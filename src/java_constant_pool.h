@@ -3,6 +3,7 @@
 
 # include <stdint.h>
 # include <stdbool.h>
+# include <stdio.h>
 
 enum java_constant_pool_entry_type
 {

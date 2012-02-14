@@ -110,7 +110,7 @@ bool java_constant_pool_entry_parse(FILE *input, java_constant_pool_entry *entry
 		break;
 
 	case JAVA_CP_ENTRY_INTEGER:
-		 return java_constant_pool_entry_integer_parse(input, entry);
+		return java_constant_pool_entry_integer_parse(input, entry);
 		break;
 	case JAVA_CP_ENTRY_FLOAT:
 		return java_constant_pool_entry_float_parse(input, entry);
@@ -177,21 +177,21 @@ bool java_constant_pool_parse(FILE *input, uint16_t *cp_count, java_constant_poo
 {
 	if(!fread_uint16(input, cp_count)) { return false; }
 
-	*cp = (java_constant_pool_entry**)malloc(sizeof(java_constant_pool_entry*) * *cp_count-1);
+	*cp = (java_constant_pool_entry**)malloc(sizeof(java_constant_pool_entry*) * *cp_count);
 	if(!*cp) { return false; }
   
 	int i;
-	for(i = 0; i < *cp_count-1; i++)
+	for(i = 1; i < *cp_count; i++)
 	{
 		java_constant_pool_entry *entry = (java_constant_pool_entry*)malloc(sizeof(java_constant_pool_entry));
 		if(!entry) { return false; }
 
 		if(!java_constant_pool_entry_parse(input, entry)) { return false; }
 
-		if( (entry->tag == JAVA_CP_ENTRY_DOUBLE) || (entry->tag == JAVA_CP_ENTRY_LONG) )
-		{ i++; }
-		
 		(*cp)[i] = entry;
+
+		if( (entry->tag == JAVA_CP_ENTRY_DOUBLE) || (entry->tag == JAVA_CP_ENTRY_LONG) )
+		{ i++; }		
 	}
 
 	return true;
