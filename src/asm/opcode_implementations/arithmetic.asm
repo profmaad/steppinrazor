@@ -168,6 +168,7 @@
 
 .iinc:
 	mov bl, [r10]
+	movzx rbx, bl
 	mov al, [r10+1]
 	movsx rax, al
 	add [r11+rbx*8h], rax

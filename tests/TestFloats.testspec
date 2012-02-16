@@ -1,0 +1,8 @@
+consts 
+add 
+sub 
+mul 
+mulneg 
+div 
+divneg 
+rem 
