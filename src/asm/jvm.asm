@@ -8,6 +8,27 @@ section .text
 	global run_method_float
 	global run_method_double
 
+;; parameter:
+	;; uint16_t max_stack == rdi
+	;; uint16_t max_locals == rsi
+	;; uint8_t* bytecode == rdx
+	;; union java_runtime_constant_pool_entry *runtime_cp == rcx
+
+;; stack layout:
+	;; operand stack (grows upwards)	<-- [rsp]
+	;; local variable 0			<-- [r11]
+	;; ...
+	;; local variable n			<-- [r11+n*0x8]
+	;; runtime constant pool location	<-- [rbp-0x10]
+	;; bytecode start address		<-- [rbp-0x8]
+	;; old rbp				<-- [rbp]
+	;; return address (C)
+
+;; register usage:
+	;; r10: position in bytecode
+	;; r11: start of local variable storage (points to lv0)
+	;; r12: location of runtime constant pool
+	
 run_method_float:
 run_method_double:
 run_method:
@@ -16,9 +37,13 @@ run_method:
 
 	;; store bytecode pointer
 	mov r10, rdx
-
 	;; store bytecode start address (needed for tableswitch)
 	push r10
+
+	;; store runtime constant pool pointer
+	mov r12, rcx
+	;; also store it on the stack (in case we ever loose it ^^)
+	push r12
 
 	;; reserve space for local variables (4 bytes per slot)
 	lea rax, [rsi*8h]
