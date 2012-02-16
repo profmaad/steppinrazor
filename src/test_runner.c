@@ -32,10 +32,9 @@ const char* run_testmethod(const char *method_name, const java_class *class)
 	}
 
 	const char *descriptor = strndup((const char*)class->constant_pool[method->descriptor_index]->utf8->bytes, class->constant_pool[method->descriptor_index]->utf8->length);
-
-	descriptor = strchr(descriptor, ')');
-	
-	const char return_type = descriptor[1];
+	const char *return_type_location = strchr(descriptor, ')');	
+	const char return_type = return_type_location[1];
+	free(descriptor);
 
 	char result[MAX_RESULT_SIZE];
 
@@ -164,6 +163,9 @@ int main(int argc, char **argv)
 		{
 			printf("passed\n");
 		}
+
+		free(actual_result);
+		free(method_name);
 	}
 
 	printf("\nSummary:\n");
@@ -171,6 +173,15 @@ int main(int argc, char **argv)
 	printf("\tsuccessful:\t%u\n\tfailed:\t\t%u\n", total_testcases-failed_testcases, failed_testcases);
 
 	java_class_free(class);
+
+	free(class_filename);
+	free(spec_filename);
+
+	if(fclose(spec_input) != 0)
+	{
+		fprintf(stderr, "Failed to close spec file '%s': %s\n", spec_filename, strerror(errno));
+		return 1;
+	}
 
 	return failed_testcases;
 }
