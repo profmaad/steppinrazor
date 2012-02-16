@@ -27,7 +27,7 @@ typedef union java_runtime_constant_pool_entry
 
 } java_runtime_constant_pool_entry;
 
-bool java_runtime_constant_pool_construct(uint16_t entry_count, java_constant_pool_entry **cp, java_runtime_constant_pool_entry ***runtime_cp, uint8_t **runtime_cp_types);
-void java_runtime_constant_pool_free(uint16_t entry_count, java_runtime_constant_pool_entry **runtime_cp, uint8_t *runtime_cp_types);
+bool java_runtime_constant_pool_construct(uint16_t entry_count, java_constant_pool_entry **cp, java_runtime_constant_pool_entry **runtime_cp, uint8_t **runtime_cp_types);
+void java_runtime_constant_pool_free(uint16_t entry_count, java_runtime_constant_pool_entry *runtime_cp, uint8_t *runtime_cp_types);
 
 # endif /*STEPPINRAZOR_JAVA_RUNTIME_CONSTANT_POOL_H*/

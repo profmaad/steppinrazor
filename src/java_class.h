@@ -26,7 +26,7 @@ typedef struct java_class
 
 	uint16_t constant_pool_count;
 	java_constant_pool_entry **constant_pool;
-	java_runtime_constant_pool_entry **runtime_cp;
+	java_runtime_constant_pool_entry *runtime_cp;
 	uint8_t *runtime_cp_types;
 
 	uint16_t access_flags;

@@ -110,9 +110,9 @@ int main(int argc, char **argv)
 		printf("\nruntime cp:\n");
 		for(i = 1; i < class->constant_pool_count; i++)
 		{
-			if(class->runtime_cp[i])
+			if(class->runtime_cp_types[i] > 0)
 			{
-				printf("\t[%u] (%hhu)\n", i, class->runtime_cp_types[i]);
+				printf("\t[%u] (%hhu): %p\n", i, class->runtime_cp_types[i], &(class->runtime_cp[i].string));
 			}
 		}
 	}

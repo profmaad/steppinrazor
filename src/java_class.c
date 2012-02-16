@@ -49,7 +49,7 @@ bool java_class_interfaces_parse(FILE *input, java_class *class)
 	int i;
 	for(i = 0; i < class->interfaces_count; i++)
 	{
-		if(!fread_uint16(input, &(class->interfaces[i++]))) { return false; }
+		if(!fread_uint16(input, &(class->interfaces[i]))) { return false; }
 	}
 
 	return true;
@@ -156,6 +156,10 @@ void java_class_free(const java_class *class)
 
 	if(nonconst_class->constant_pool) { java_constant_pool_free(nonconst_class->constant_pool_count, nonconst_class->constant_pool); }
 	free(nonconst_class->constant_pool);
+
+	if(nonconst_class->runtime_cp) { java_runtime_constant_pool_free(nonconst_class->constant_pool_count, nonconst_class->runtime_cp, nonconst_class->runtime_cp_types); }
+	free(nonconst_class->runtime_cp);
+	free(nonconst_class->runtime_cp_types);
 	
 	free(nonconst_class->interfaces);
 

@@ -29,7 +29,7 @@ bool java_runtime_constant_pool_entry_classmember_parse(java_constant_pool_entry
 	return true;
 }
 
-bool java_runtime_constant_pool_entry_construct(java_constant_pool_entry **cp, uint16_t index, java_runtime_constant_pool_entry **runtime_entry)
+bool java_runtime_constant_pool_entry_construct(java_constant_pool_entry **cp, uint16_t index, java_runtime_constant_pool_entry *runtime_entry)
 {
 	java_constant_pool_entry *entry = cp[index];
 	if(!entry) { return false; }
@@ -38,50 +38,30 @@ bool java_runtime_constant_pool_entry_construct(java_constant_pool_entry **cp, u
 	{
 	case JAVA_CP_ENTRY_STRING:
 	case JAVA_CP_ENTRY_CLASS:
-	case JAVA_CP_ENTRY_INTEGER:
-	case JAVA_CP_ENTRY_FLOAT:
-	case JAVA_CP_ENTRY_LONG:
-	case JAVA_CP_ENTRY_DOUBLE:
-	case JAVA_CP_ENTRY_FIELDREF:
-	case JAVA_CP_ENTRY_METHODREF:
-	case JAVA_CP_ENTRY_INTERFACEMETHODREF:		
-		break;
-	default:
-		*runtime_entry = NULL;
-		return true;
-	}
-
-	*runtime_entry = (java_runtime_constant_pool_entry*)malloc(sizeof(java_runtime_constant_pool_entry));
-	if(!(*runtime_entry)) { return false; }
-
-	switch(entry->tag)
-	{
-	case JAVA_CP_ENTRY_STRING:
-	case JAVA_CP_ENTRY_CLASS:
 		if(cp[entry->index_raw->index]->utf8)
 		{
-			(*runtime_entry)->string = (uint8_t*)strndup((const char*)cp[entry->index_raw->index]->utf8->bytes, cp[entry->index_raw->index]->utf8->length);
-			if(!(*runtime_entry)->string) { return false; }
+			runtime_entry->string = (uint8_t*)strndup((const char*)cp[entry->index_raw->index]->utf8->bytes, cp[entry->index_raw->index]->utf8->length);
+			if(!runtime_entry->string) { return false; }
 		}
 		break;
 
 	case JAVA_CP_ENTRY_INTEGER:
-		if(entry->const_integer) { (*runtime_entry)->int_value = entry->const_integer->value; }
+		if(entry->const_integer) { runtime_entry->int_value = entry->const_integer->value; }
 		break;
 	case JAVA_CP_ENTRY_FLOAT:
-		if(entry->const_long) { (*runtime_entry)->long_value = entry->const_long->value; }
+		if(entry->const_long) { runtime_entry->long_value = entry->const_long->value; }
 		break;
 	case JAVA_CP_ENTRY_LONG:
-		if(entry->const_float) { (*runtime_entry)->float_value = entry->const_float->value; }
+		if(entry->const_float) { runtime_entry->float_value = entry->const_float->value; }
 		break;
 	case JAVA_CP_ENTRY_DOUBLE:
-		if(entry->const_double) { (*runtime_entry)->double_value = entry->const_double->value; }
+		if(entry->const_double) { runtime_entry->double_value = entry->const_double->value; }
 		break;
 
 	case JAVA_CP_ENTRY_FIELDREF:
 	case JAVA_CP_ENTRY_METHODREF:
 	case JAVA_CP_ENTRY_INTERFACEMETHODREF:
-		return java_runtime_constant_pool_entry_classmember_parse(cp, index, *runtime_entry);
+		return java_runtime_constant_pool_entry_classmember_parse(cp, index, runtime_entry);
 		break;
 	default:
 		return false;
@@ -112,10 +92,11 @@ void java_runtime_constant_pool_entry_free(java_runtime_constant_pool_entry *ent
 	}
 }
 
-bool java_runtime_constant_pool_construct(uint16_t entry_count, java_constant_pool_entry **cp, java_runtime_constant_pool_entry ***runtime_cp, uint8_t **runtime_cp_types)
+bool java_runtime_constant_pool_construct(uint16_t entry_count, java_constant_pool_entry **cp, java_runtime_constant_pool_entry **runtime_cp, uint8_t **runtime_cp_types)
 {
-	*runtime_cp = (java_runtime_constant_pool_entry**)malloc(sizeof(java_runtime_constant_pool_entry*) * entry_count);
+	*runtime_cp = (java_runtime_constant_pool_entry*)malloc(sizeof(java_runtime_constant_pool_entry) * entry_count);
 	if(!*runtime_cp) { return false; }
+	printf("allocated %zu bytes at %p (%hu entries of %zu bytes each)\n", sizeof(java_runtime_constant_pool_entry) * entry_count, *runtime_cp, entry_count, sizeof(java_runtime_constant_pool_entry));
 
 	*runtime_cp_types = (uint8_t*)malloc(entry_count);
 	if(!*runtime_cp_types) { return false; }
@@ -123,20 +104,36 @@ bool java_runtime_constant_pool_construct(uint16_t entry_count, java_constant_po
 	uint16_t i;
 	for(i = 1; i < entry_count; i++)
 	{
+		switch(cp[i]->tag)
+		{
+		case JAVA_CP_ENTRY_STRING:
+		case JAVA_CP_ENTRY_CLASS:
+		case JAVA_CP_ENTRY_INTEGER:
+		case JAVA_CP_ENTRY_FLOAT:
+		case JAVA_CP_ENTRY_LONG:
+		case JAVA_CP_ENTRY_DOUBLE:
+		case JAVA_CP_ENTRY_FIELDREF:
+		case JAVA_CP_ENTRY_METHODREF:
+		case JAVA_CP_ENTRY_INTERFACEMETHODREF:		
+			break;
+		default:
+			(*runtime_cp_types)[i] = 0x0;
+			continue;
+		}
+
 		if(!java_runtime_constant_pool_entry_construct(cp, i, &((*runtime_cp)[i]))) { printf("booboo: %hu\n", i); return false; }
-		if((*runtime_cp)[i]) { (*runtime_cp_types)[i] = cp[i]->tag; }
-		else { (*runtime_cp_types)[i] = 0x0; }
+		(*runtime_cp_types)[i] = cp[i]->tag;
 
 		if(cp[i] && (cp[i]->tag == JAVA_CP_ENTRY_LONG || cp[i]->tag == JAVA_CP_ENTRY_DOUBLE)) { i++; }
 	}
 
 	return true;
 }
-void java_runtime_constant_pool_free(uint16_t entry_count, java_runtime_constant_pool_entry **runtime_cp, uint8_t *runtime_cp_types)
+void java_runtime_constant_pool_free(uint16_t entry_count, java_runtime_constant_pool_entry *runtime_cp, uint8_t *runtime_cp_types)
 {
 	int i;
 	for(i = 0; i < entry_count; i++)
 	{
-		if(runtime_cp[i]) { java_runtime_constant_pool_entry_free(runtime_cp[i], runtime_cp_types[i]); }
+		java_runtime_constant_pool_entry_free(&(runtime_cp[i]), runtime_cp_types[i]);
 	}
 }

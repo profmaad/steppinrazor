@@ -183,15 +183,13 @@ bool java_constant_pool_parse(FILE *input, uint16_t *cp_count, java_constant_poo
 	int i;
 	for(i = 1; i < *cp_count; i++)
 	{
-		java_constant_pool_entry *entry = (java_constant_pool_entry*)malloc(sizeof(java_constant_pool_entry));
-		if(!entry) { return false; }
+		(*cp)[i] = (java_constant_pool_entry*)malloc(sizeof(java_constant_pool_entry));
+		if(!(*cp)[i]) { return false; }
 
-		if(!java_constant_pool_entry_parse(input, entry)) { return false; }
+		if(!java_constant_pool_entry_parse(input, (*cp)[i])) { return false; }
 
-		(*cp)[i] = entry;
-
-		if( (entry->tag == JAVA_CP_ENTRY_DOUBLE) || (entry->tag == JAVA_CP_ENTRY_LONG) )
-		{ i++; }		
+		if( ((*cp)[i]->tag == JAVA_CP_ENTRY_DOUBLE) || ((*cp)[i]->tag == JAVA_CP_ENTRY_LONG) )
+		{ i++; }
 	}
 
 	return true;
@@ -199,7 +197,7 @@ bool java_constant_pool_parse(FILE *input, uint16_t *cp_count, java_constant_poo
 void java_constant_pool_free(uint16_t cp_count, java_constant_pool_entry **cp)
 {
 	int i;
-	for(i = 0; i < cp_count-1; i++)
+	for(i = 1; i < cp_count; i++)
 	{
 		if(cp[i]) { java_constant_pool_entry_free(cp[i]); }
 		free(cp[i]);
