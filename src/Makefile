@@ -3,6 +3,10 @@ CFLAGS=-c -g -Wall
 LDFLAGS=-lc
 ASM=yasm
 ASMFLAGS=-f elf64 -g dwarf2
+OFFSET_GEN=../tools/offset_gen.rb
+RUBY=ruby
+
+OFFSET_HEADERS=java_class.h java_attribute.h java_constant_pool.h java_field.h java_method.h java_runtime_constant_pool.h
 
 all: load_classfile class_runner test_runner
 
@@ -24,3 +28,13 @@ test_runner: test_runner.o java_class.o java_constant_pool.o java_field.o java_m
 clean:
 	rm -f *.o */*.o
 	rm -f bytecode_reader load_classfile
+	rm -f offsets.c offsets offsets.asm
+
+offsets.asm: offsets
+	./offsets > $@
+
+offsets: offsets.c
+	$(CC) -x c -g -Wall $< -o $@
+
+offsets.c: $(OFFSET_GEN)
+	$(RUBY) $< $(OFFSET_HEADERS) > $@
