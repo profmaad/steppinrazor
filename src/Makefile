@@ -27,7 +27,7 @@ test_runner: test_runner.o java_class.o java_constant_pool.o java_field.o java_m
 
 clean:
 	rm -f *.o */*.o
-	rm -f bytecode_reader load_classfile
+	rm -f load_classfile class_runner test_runner
 	rm -f offsets.c offsets asm/offsets.asm
 
 asm/offsets.asm: offsets
