@@ -8,7 +8,7 @@ RUBY=ruby
 
 OFFSET_HEADERS=java_class.h java_attribute.h java_constant_pool.h java_field.h java_method.h java_runtime_constant_pool.h
 
-all: load_classfile class_runner test_runner
+all: asm/offsets.asm load_classfile class_runner test_runner
 
 load_classfile: load_classfile.o java_class.o java_constant_pool.o java_field.o java_method.o java_attribute.o binary_helpers.o java_runtime_constant_pool.o
 	$(CC) $(LDFLAGS) $^ -o $@
@@ -28,9 +28,9 @@ test_runner: test_runner.o java_class.o java_constant_pool.o java_field.o java_m
 clean:
 	rm -f *.o */*.o
 	rm -f bytecode_reader load_classfile
-	rm -f offsets.c offsets offsets.asm
+	rm -f offsets.c offsets asm/offsets.asm
 
-offsets.asm: offsets
+asm/offsets.asm: offsets
 	./offsets > $@
 
 offsets: offsets.c
