@@ -96,7 +96,6 @@ bool java_runtime_constant_pool_construct(uint16_t entry_count, java_constant_po
 {
 	*runtime_cp = (java_runtime_constant_pool_entry*)malloc(sizeof(java_runtime_constant_pool_entry) * entry_count);
 	if(!*runtime_cp) { return false; }
-	printf("allocated %zu bytes at %p (%hu entries of %zu bytes each)\n", sizeof(java_runtime_constant_pool_entry) * entry_count, *runtime_cp, entry_count, sizeof(java_runtime_constant_pool_entry));
 
 	*runtime_cp_types = (uint8_t*)malloc(entry_count);
 	if(!*runtime_cp_types) { return false; }
