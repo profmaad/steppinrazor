@@ -1,27 +1,27 @@
-consts 
-add 
-sub 
-mul 
-mulneg 
-div 
-divfrac 
-divfraczero 
-divneg 
-rem 
-remzero 
-remneg 
-remneg2 
-neg 
-negneg 
-shl 
-shlneg 
-shr 
-shrneg 
-ushr 
-ushrneg 
-and 
-andneg 
-or 
-orneg 
-xor 
-xorneg 
+consts 1
+add 3
+sub -3
+mul 6
+mulneg -3
+div 3
+divfrac 3
+divfraczero 0
+divneg -3
+rem 1
+remzero 0
+remneg -1
+remneg2 1
+neg -1
+negneg 1
+shl 4294967296
+shlneg -4294967296
+shr 2
+shrneg -2
+ushr 2
+ushrneg 4294967294
+and 32
+andneg 64
+or 112
+orneg -1
+xor 80
+xorneg -3

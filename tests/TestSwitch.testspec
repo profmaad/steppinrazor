@@ -1,10 +1,10 @@
-tableswitch1 
-tableswitch2 
-tableswitch3 
-tableswitchdefault 
-lookupswitch1 
-lookupswitch2 
-lookupswitch3 
-lookupswitch4 
-lookupswitch5 
-lookupswitchdefault 
+tableswitch1 23
+tableswitch2 666
+tableswitch3 42
+tableswitchdefault -23
+lookupswitch1 23
+lookupswitch2 42
+lookupswitch3 7
+lookupswitch4 555
+lookupswitch5 -42
+lookupswitchdefault -23

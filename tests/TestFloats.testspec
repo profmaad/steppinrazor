@@ -1,8 +1,8 @@
-consts 
-add 
-sub 
-mul 
-mulneg 
-div 
-divneg 
-rem 
+consts 2.00
+add 3.00
+sub -3.00
+mul 6.00
+mulneg -3.00
+div 1.50
+divneg -1.50
+rem 1.00

@@ -1,6 +1,6 @@
-ldcint 
-ldcfloat 
-ldcwint 
-ldcwfloat 
-ldc2wlong 
-ldc2wdouble 
+ldcint -232323
+ldcfloat 2.30
+ldcwint -424242
+ldcwfloat 32.20
+ldc2wlong 234223
+ldc2wdouble 42.23
