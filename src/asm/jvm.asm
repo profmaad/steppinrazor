@@ -63,6 +63,7 @@ run_method:
 opcode_impl:
 
 %include "opcode_implementations/const.asm"
+%include "opcode_implementations/ldc.asm"
 %include "opcode_implementations/load.asm"
 %include "opcode_implementations/store.asm"
 %include "opcode_implementations/stack.asm"

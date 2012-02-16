@@ -1,4 +1,4 @@
-all: testdoubles_-init- testfloats_-init- testints_-init- testlongs_-init- teststack_-init- testconversions_-init- testcomparisons_-init- testgotow_-init- testswitch_-init-
+all: testdoubles_-init- testfloats_-init- testints_-init- testlongs_-init- teststack_-init- testconversions_-init- testcomparisons_-init- testgotow_-init- testswitch_-init- TestLDC.class
 
 testdoubles_-init-: TestDoubles.class
 	catmother-bytecodeexporter $<

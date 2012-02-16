@@ -20,9 +20,9 @@ opcodes:
 	dq opcode_impl.dconst_1
 	dq opcode_impl.bipush
 	dq opcode_impl.sipush
-	dq run_method.loop
-	dq run_method.loop
-	dq run_method.loop
+	dq opcode_impl.ldc
+	dq opcode_impl.ldc_w
+	dq opcode_impl.ldc2_w
 	dq opcode_impl.load
 	dq opcode_impl.wload
 	dq opcode_impl.load

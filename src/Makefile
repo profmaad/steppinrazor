@@ -22,5 +22,5 @@ class_runner: class_runner.o java_class.o java_constant_pool.o java_field.o java
 	$(CC) $(CFLAGS) $< -o $@
 
 clean:
-	rm -f *.o
+	rm -f *.o */*.o
 	rm -f bytecode_reader load_classfile
