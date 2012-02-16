@@ -87,31 +87,31 @@ int main(int argc, char **argv)
 	switch(return_type)
 	{
 	case 'Z':
-		printf("result: %hhu\n", (uint8_t)run_method(method->code->max_stack, method->code->max_locals, method->code->bytecode));
+		printf("result: %hhu\n", (uint8_t)run_method(method->code->max_stack, method->code->max_locals, method->code->bytecode, class->runtime_cp));
 		break;
 	case 'B':
-		printf("result: %hhd\n", (int8_t)run_method(method->code->max_stack, method->code->max_locals, method->code->bytecode));
+		printf("result: %hhd\n", (int8_t)run_method(method->code->max_stack, method->code->max_locals, method->code->bytecode, class->runtime_cp));
 		break;
 	case 'C':
-		printf("result: %hhu\n", (uint8_t)run_method(method->code->max_stack, method->code->max_locals, method->code->bytecode));
+		printf("result: %hhu\n", (uint8_t)run_method(method->code->max_stack, method->code->max_locals, method->code->bytecode, class->runtime_cp));
 		break;
 	case 'S':
-		printf("result: %hd\n", (int16_t)run_method(method->code->max_stack, method->code->max_locals, method->code->bytecode));
+		printf("result: %hd\n", (int16_t)run_method(method->code->max_stack, method->code->max_locals, method->code->bytecode, class->runtime_cp));
 		break;
 	case 'I':
-		printf("result: %d\n", (int)run_method(method->code->max_stack, method->code->max_locals, method->code->bytecode));
+		printf("result: %d\n", (int)run_method(method->code->max_stack, method->code->max_locals, method->code->bytecode, class->runtime_cp));
 		break;
 	case 'J':
-		printf("result: %ld\n", (long)run_method(method->code->max_stack, method->code->max_locals, method->code->bytecode));
+		printf("result: %ld\n", (long)run_method(method->code->max_stack, method->code->max_locals, method->code->bytecode, class->runtime_cp));
 		break;      
 	case 'F':
-		printf("result: %f\n", run_method_float(method->code->max_stack, method->code->max_locals, method->code->bytecode));
+		printf("result: %f\n", run_method_float(method->code->max_stack, method->code->max_locals, method->code->bytecode, class->runtime_cp));
 		break;      
 	case 'D':
-		printf("result: %f\n", run_method_double(method->code->max_stack, method->code->max_locals, method->code->bytecode));
+		printf("result: %f\n", run_method_double(method->code->max_stack, method->code->max_locals, method->code->bytecode, class->runtime_cp));
 		break;
 	case 'L':
-		printf("result: %p\n", run_method(method->code->max_stack, method->code->max_locals, method->code->bytecode));
+		printf("result: %p\n", run_method(method->code->max_stack, method->code->max_locals, method->code->bytecode, class->runtime_cp));
 	}
 
 	java_class_free(class);
