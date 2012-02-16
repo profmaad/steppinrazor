@@ -1,28 +1,8 @@
-all: testdoubles_-init- testfloats_-init- testints_-init- testlongs_-init- teststack_-init- testconversions_-init- testcomparisons_-init- testgotow_-init- testswitch_-init- TestLDC.class
-
-testdoubles_-init-: TestDoubles.class
-	catmother-bytecodeexporter $<
-testfloats_-init-: TestFloats.class
-	catmother-bytecodeexporter $<
-testints_-init-: TestInts.class
-	catmother-bytecodeexporter $<
-testlongs_-init-: TestLongs.class
-	catmother-bytecodeexporter $<
-teststack_-init-: TestStack.class
-	catmother-bytecodeexporter $<	
-testconversions_-init-: TestConversions.class
-	catmother-bytecodeexporter $<	
-testcomparisons_-init-: TestComparisons.class
-	catmother-bytecodeexporter $<	
-testgotow_-init-: TestGotoW.class
-	catmother-bytecodeexporter $<	
-testswitch_-init-: TestSwitch.class
-	catmother-bytecodeexporter $<	
+all: TestInts.class TestLongs.class TestFloats.class TestDoubles.class TestConversions.class TestComparisons.class TestGotoW.class TestSwitch.class TestStack.class TestFields.class TestLDC.class
 
 %.class: %.java
 	javac $<
 
 clean:
-	rm -f TestInts.class TestLongs.class TestFloats.class TestDoubles.class TestConversions.class TestComparisons.class TestGotoW.class TestSwitch.class
-	rm -f test*
+	rm -f TestInts.class TestLongs.class TestFloats.class TestDoubles.class TestConversions.class TestComparisons.class TestGotoW.class TestSwitch.class TestFields.class TestLDC.class
 
