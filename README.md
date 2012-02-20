@@ -10,6 +10,7 @@ Multiple components already work:
 * running bytecode
 * most opcodes (see below)
 * returning results from methods
+* retrieving primitive types from the constant pool (ldc*)
 
 A lot of things are still missing:
 
