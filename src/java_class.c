@@ -117,8 +117,7 @@ bool parse_classfile(FILE *input, java_class *class)
 		java_class_interfaces_parse(input, class) &&
 		java_fields_parse(input, &(class->fields_count), &(class->fields), class->constant_pool) &&
 		java_methods_parse(input, &(class->methods_count), &(class->methods), class->constant_pool) &&
-		java_class_attributes_parse(input, class) &&
-		java_runtime_constant_pool_construct(class->constant_pool_count, class->constant_pool, &(class->runtime_cp), &(class->runtime_cp_types))
+		java_class_attributes_parse(input, class)
 		;
 }
 
@@ -157,10 +156,6 @@ void java_class_free(const java_class *class)
 	if(nonconst_class->constant_pool) { java_constant_pool_free(nonconst_class->constant_pool_count, nonconst_class->constant_pool); }
 	free(nonconst_class->constant_pool);
 
-	if(nonconst_class->runtime_cp) { java_runtime_constant_pool_free(nonconst_class->constant_pool_count, nonconst_class->runtime_cp, nonconst_class->runtime_cp_types); }
-	free(nonconst_class->runtime_cp);
-	free(nonconst_class->runtime_cp_types);
-	
 	free(nonconst_class->interfaces);
 
 	if(nonconst_class->fields) { java_fields_free(nonconst_class->fields_count, nonconst_class->fields); }

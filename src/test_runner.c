@@ -9,6 +9,7 @@
 # include "jvm.h"
 
 # include "java_class.h"
+# include "java_runtime_class.h"
 
 # define MAX_RESULT_SIZE 30
 # define MAX_LINE_SIZE 100
@@ -38,34 +39,46 @@ const char* run_testmethod(const char *method_name, const java_class *class)
 
 	char result[MAX_RESULT_SIZE];
 
+	java_runtime_class *rt_class = (java_runtime_class*)malloc(sizeof(java_runtime_class));
+	if(!rt_class)
+	{
+		fprintf(stderr, "failed to allocate memory for runtime class\n");
+		exit(1);
+	}
+	if(!java_runtime_class_construct(rt_class, class))
+	{
+		fprintf(stderr, "failed to construct runtime class representation\n");
+		exit(1);
+	}
+
 	switch(return_type)
 	{
 	case 'Z':
-		snprintf(result, MAX_RESULT_SIZE, "%hhu", (uint8_t)run_method(method->code->max_stack, method->code->max_locals, method->code->bytecode, class->runtime_cp));
+		snprintf(result, MAX_RESULT_SIZE, "%hhu", (uint8_t)run_method(method->code->max_stack, method->code->max_locals, method->code->bytecode, rt_class->constant_pool));
 		break;
 	case 'B':
-		snprintf(result, MAX_RESULT_SIZE, "%hhd", (int8_t)run_method(method->code->max_stack, method->code->max_locals, method->code->bytecode, class->runtime_cp));
+		snprintf(result, MAX_RESULT_SIZE, "%hhd", (int8_t)run_method(method->code->max_stack, method->code->max_locals, method->code->bytecode, rt_class->constant_pool));
 		break;
 	case 'C':
-		snprintf(result, MAX_RESULT_SIZE, "%hhu", (uint8_t)run_method(method->code->max_stack, method->code->max_locals, method->code->bytecode, class->runtime_cp));
+		snprintf(result, MAX_RESULT_SIZE, "%hhu", (uint8_t)run_method(method->code->max_stack, method->code->max_locals, method->code->bytecode, rt_class->constant_pool));
 		break;
 	case 'S':
-		snprintf(result, MAX_RESULT_SIZE, "%hd", (int16_t)run_method(method->code->max_stack, method->code->max_locals, method->code->bytecode, class->runtime_cp));
+		snprintf(result, MAX_RESULT_SIZE, "%hd", (int16_t)run_method(method->code->max_stack, method->code->max_locals, method->code->bytecode, rt_class->constant_pool));
 		break;
 	case 'I':
-		snprintf(result, MAX_RESULT_SIZE, "%d", (int)run_method(method->code->max_stack, method->code->max_locals, method->code->bytecode, class->runtime_cp));
+		snprintf(result, MAX_RESULT_SIZE, "%d", (int)run_method(method->code->max_stack, method->code->max_locals, method->code->bytecode, rt_class->constant_pool));
 		break;
 	case 'J':
-		snprintf(result, MAX_RESULT_SIZE, "%ld", (long)run_method(method->code->max_stack, method->code->max_locals, method->code->bytecode, class->runtime_cp));
+		snprintf(result, MAX_RESULT_SIZE, "%ld", (long)run_method(method->code->max_stack, method->code->max_locals, method->code->bytecode, rt_class->constant_pool));
 		break;		
 	case 'F':
-		snprintf(result, MAX_RESULT_SIZE, "%0.2f", run_method_float(method->code->max_stack, method->code->max_locals, method->code->bytecode, class->runtime_cp));
+		snprintf(result, MAX_RESULT_SIZE, "%0.2f", run_method_float(method->code->max_stack, method->code->max_locals, method->code->bytecode, rt_class->constant_pool));
 		break;      
 	case 'D':
-		snprintf(result, MAX_RESULT_SIZE, "%0.2f", run_method_double(method->code->max_stack, method->code->max_locals, method->code->bytecode, class->runtime_cp));
+		snprintf(result, MAX_RESULT_SIZE, "%0.2f", run_method_double(method->code->max_stack, method->code->max_locals, method->code->bytecode, rt_class->constant_pool));
 		break;
 	case 'L':
-		snprintf(result, MAX_RESULT_SIZE, "%p", run_method(method->code->max_stack, method->code->max_locals, method->code->bytecode, class->runtime_cp));
+		snprintf(result, MAX_RESULT_SIZE, "%p", run_method(method->code->max_stack, method->code->max_locals, method->code->bytecode, rt_class->constant_pool));
 	}
 
 	return strndup(result, MAX_RESULT_SIZE);

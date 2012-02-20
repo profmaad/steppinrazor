@@ -1,8 +1,10 @@
 # include <stdio.h>
 # include <errno.h>
 # include <string.h>
+# include <stdlib.h>
 
 # include "java_class.h"
+# include "java_runtime_class.h"
 
 int main(int argc, char **argv)
 {
@@ -105,14 +107,26 @@ int main(int argc, char **argv)
 		}
 	}
 
-	if(class->runtime_cp)
+	java_runtime_class *rt_class = (java_runtime_class*)malloc(sizeof(java_runtime_class));
+	if(!rt_class)
+	{
+		fprintf(stderr, "failed to allocate memory for runtime class\n");
+		exit(1);
+	}
+	if(!java_runtime_class_construct(rt_class, class))
+	{
+		fprintf(stderr, "failed to construct runtime class representation\n");
+		exit(1);
+	}
+
+	if(rt_class->constant_pool)
 	{
 		printf("\nruntime cp:\n");
-		for(i = 1; i < class->constant_pool_count; i++)
+		for(i = 1; i < rt_class->constant_pool_count; i++)
 		{
-			if(class->runtime_cp_types[i] > 0)
+			if(rt_class->constant_pool_types[i] > 0)
 			{
-				printf("\t[%u] (%hhu): %p\n", i, class->runtime_cp_types[i], &(class->runtime_cp[i].string));
+				printf("\t[%u] (%hhu): %p\n", i, rt_class->constant_pool_types[i], &(rt_class->constant_pool[i].string));
 			}
 		}
 	}

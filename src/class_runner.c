@@ -9,6 +9,7 @@
 # include "jvm.h"
 
 # include "java_class.h"
+# include "java_runtime_class.h"
 
 int main(int argc, char **argv)
 {
@@ -83,35 +84,47 @@ int main(int argc, char **argv)
 		if((i+1) % 8 == 0) { printf("\n"); }
 	}
 	printf("\n");
+
+	java_runtime_class *rt_class = (java_runtime_class*)malloc(sizeof(java_runtime_class));
+	if(!rt_class)
+	{
+		fprintf(stderr, "failed to allocate memory for runtime class\n");
+		exit(1);
+	}
+	if(!java_runtime_class_construct(rt_class, class))
+	{
+		fprintf(stderr, "failed to construct runtime class representation\n");
+		exit(1);
+	}
 	
 	switch(return_type)
 	{
 	case 'Z':
-		printf("result: %hhu\n", (uint8_t)run_method(method->code->max_stack, method->code->max_locals, method->code->bytecode, class->runtime_cp));
+		printf("result: %hhu\n", (uint8_t)run_method(method->code->max_stack, method->code->max_locals, method->code->bytecode, rt_class->constant_pool));
 		break;
 	case 'B':
-		printf("result: %hhd\n", (int8_t)run_method(method->code->max_stack, method->code->max_locals, method->code->bytecode, class->runtime_cp));
+		printf("result: %hhd\n", (int8_t)run_method(method->code->max_stack, method->code->max_locals, method->code->bytecode, rt_class->constant_pool));
 		break;
 	case 'C':
-		printf("result: %hhu\n", (uint8_t)run_method(method->code->max_stack, method->code->max_locals, method->code->bytecode, class->runtime_cp));
+		printf("result: %hhu\n", (uint8_t)run_method(method->code->max_stack, method->code->max_locals, method->code->bytecode, rt_class->constant_pool));
 		break;
 	case 'S':
-		printf("result: %hd\n", (int16_t)run_method(method->code->max_stack, method->code->max_locals, method->code->bytecode, class->runtime_cp));
+		printf("result: %hd\n", (int16_t)run_method(method->code->max_stack, method->code->max_locals, method->code->bytecode, rt_class->constant_pool));
 		break;
 	case 'I':
-		printf("result: %d\n", (int)run_method(method->code->max_stack, method->code->max_locals, method->code->bytecode, class->runtime_cp));
+		printf("result: %d\n", (int)run_method(method->code->max_stack, method->code->max_locals, method->code->bytecode, rt_class->constant_pool));
 		break;
 	case 'J':
-		printf("result: %ld\n", (long)run_method(method->code->max_stack, method->code->max_locals, method->code->bytecode, class->runtime_cp));
+		printf("result: %ld\n", (long)run_method(method->code->max_stack, method->code->max_locals, method->code->bytecode, rt_class->constant_pool));
 		break;      
 	case 'F':
-		printf("result: %f\n", run_method_float(method->code->max_stack, method->code->max_locals, method->code->bytecode, class->runtime_cp));
+		printf("result: %f\n", run_method_float(method->code->max_stack, method->code->max_locals, method->code->bytecode, rt_class->constant_pool));
 		break;      
 	case 'D':
-		printf("result: %f\n", run_method_double(method->code->max_stack, method->code->max_locals, method->code->bytecode, class->runtime_cp));
+		printf("result: %f\n", run_method_double(method->code->max_stack, method->code->max_locals, method->code->bytecode, rt_class->constant_pool));
 		break;
 	case 'L':
-		printf("result: %p\n", run_method(method->code->max_stack, method->code->max_locals, method->code->bytecode, class->runtime_cp));
+		printf("result: %p\n", run_method(method->code->max_stack, method->code->max_locals, method->code->bytecode, rt_class->constant_pool));
 	}
 
 	java_class_free(class);

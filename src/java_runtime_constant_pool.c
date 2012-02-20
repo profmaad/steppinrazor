@@ -92,14 +92,8 @@ void java_runtime_constant_pool_entry_free(java_runtime_constant_pool_entry *ent
 	}
 }
 
-bool java_runtime_constant_pool_construct(uint16_t entry_count, java_constant_pool_entry **cp, java_runtime_constant_pool_entry **runtime_cp, uint8_t **runtime_cp_types)
+bool java_runtime_constant_pool_construct(uint16_t entry_count, java_runtime_constant_pool_entry *runtime_cp, uint8_t *runtime_cp_types, java_constant_pool_entry **cp, java_runtime_class *rt_class)
 {
-	*runtime_cp = (java_runtime_constant_pool_entry*)malloc(sizeof(java_runtime_constant_pool_entry) * entry_count);
-	if(!*runtime_cp) { return false; }
-
-	*runtime_cp_types = (uint8_t*)malloc(entry_count);
-	if(!*runtime_cp_types) { return false; }
-
 	uint16_t i;
 	for(i = 1; i < entry_count; i++)
 	{
@@ -116,12 +110,12 @@ bool java_runtime_constant_pool_construct(uint16_t entry_count, java_constant_po
 		case JAVA_CP_ENTRY_INTERFACEMETHODREF:		
 			break;
 		default:
-			(*runtime_cp_types)[i] = 0x0;
+			runtime_cp_types[i] = 0x0;
 			continue;
 		}
 
-		if(!java_runtime_constant_pool_entry_construct(cp, i, &((*runtime_cp)[i]))) { printf("booboo: %hu\n", i); return false; }
-		(*runtime_cp_types)[i] = cp[i]->tag;
+		if(!java_runtime_constant_pool_entry_construct(cp, i, &(runtime_cp[i]))) { return false; }
+		runtime_cp_types[i] = cp[i]->tag;
 
 		if(cp[i] && (cp[i]->tag == JAVA_CP_ENTRY_LONG || cp[i]->tag == JAVA_CP_ENTRY_DOUBLE)) { i++; }
 	}

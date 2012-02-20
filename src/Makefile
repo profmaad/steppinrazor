@@ -10,13 +10,13 @@ OFFSET_HEADERS=java_class.h java_attribute.h java_constant_pool.h java_field.h j
 
 all: asm/offsets.asm load_classfile class_runner test_runner
 
-load_classfile: load_classfile.o java_class.o java_constant_pool.o java_field.o java_method.o java_attribute.o binary_helpers.o java_runtime_constant_pool.o
+load_classfile: load_classfile.o java_class.o java_constant_pool.o java_field.o java_method.o java_attribute.o binary_helpers.o java_runtime_constant_pool.o java_runtime_class.o java_runtime_field.o java_runtime_method.o
 	$(CC) $(LDFLAGS) $^ -o $@
 
-class_runner: class_runner.o java_class.o java_constant_pool.o java_field.o java_method.o java_attribute.o binary_helpers.o java_runtime_constant_pool.o asm/jvm.o
+class_runner: class_runner.o java_class.o java_constant_pool.o java_field.o java_method.o java_attribute.o binary_helpers.o java_runtime_constant_pool.o java_runtime_class.o java_runtime_field.o java_runtime_method.o asm/jvm.o
 	$(CC) $(LDFLAGS) $^ -o $@
 
-test_runner: test_runner.o java_class.o java_constant_pool.o java_field.o java_method.o java_attribute.o binary_helpers.o java_runtime_constant_pool.o asm/jvm.o
+test_runner: test_runner.o java_class.o java_constant_pool.o java_field.o java_method.o java_attribute.o binary_helpers.o java_runtime_constant_pool.o java_runtime_class.o java_runtime_field.o java_runtime_method.o asm/jvm.o
 	$(CC) $(LDFLAGS) $^ -o $@
 
 %.o: %.asm
