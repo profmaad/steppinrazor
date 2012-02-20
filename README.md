@@ -26,10 +26,6 @@ Certain thinks are not in and probably won't ever be:
 
 I don't really see the use in bytecode verification. The compiler does it already and if needs be, you could just run a verifier beforehand and have it store the result with the hash of the .class file or something along those lines.
 
-To see which instructions are already implemented, do:
-
-    grep 'dq opcode_impl\.' jvm.asm | sed 's/\tdq opcode_impl\.//'
-
 The assembly is written for x86_64 using NASM syntax. It will not work on x86 (wrong register names, first of all).
 
 ## What you need
