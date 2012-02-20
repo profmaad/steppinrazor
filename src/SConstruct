@@ -13,3 +13,5 @@ env.Program(['class_runner.c', 'steppinrazor/asm/jvm.asm'])
 env.Program(['test_runner.c', 'steppinrazor/asm/jvm.asm'])
 
 env.Program(['load_classfile.c'])
+
+SConscript(['steppinrazor/parser/SConstruct', 'steppinrazor/SConstruct'])
