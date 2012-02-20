@@ -1,8 +1,5 @@
 all: run
 
-%.class: %.java
-	javac $<
-
 run: TestInts.class TestLongs.class TestFloats.class TestDoubles.class TestConversions.class TestComparisons.class TestGotoW.class TestSwitch.class TestLDC.class TestInts.testspec TestLongs.testspec TestFloats.testspec TestDoubles.testspec TestConversions.testspec TestComparisons.testspec TestGotoW.testspec TestSwitch.testspec TestLDC.testspec
 	../src/test_runner TestInts
 	../src/test_runner TestLongs
@@ -14,7 +11,3 @@ run: TestInts.class TestLongs.class TestFloats.class TestDoubles.class TestConve
 	../src/test_runner TestSwitch
 	../src/test_runner TestLDC
 	@echo -e "\n-----------------------------\nAll tests successful!\n-----------------------------"
-
-clean:
-	rm -f TestInts.class TestLongs.class TestFloats.class TestDoubles.class TestConversions.class TestComparisons.class TestGotoW.class TestSwitch.class TestFields.class TestLDC.class
-
