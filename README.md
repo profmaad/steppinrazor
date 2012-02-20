@@ -34,9 +34,10 @@ The assembly is written for x86_64 using NASM syntax. It will not work on x86 (w
 
 ## What you need
 
- * x86_64 POSIX-compatible system
- * MMX, SSE, SSE2
- * c compiler (gcc and clang are "tested")
- * NASM assembler (or compatible, using yasm myself)
- * make (if you want to use my crummy makefiles)
- * java jre (if you want to run the tests)
+* x86_64 POSIX-compatible system
+* MMX, SSE, SSE2
+* c compiler (gcc and clang are "tested")
+* NASM assembler (or compatible, using yasm myself)
+* SCons (for building)
+* make (if you want to run tests)
+* java jre (if you want to run the tests)
