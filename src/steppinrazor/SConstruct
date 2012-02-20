@@ -12,3 +12,5 @@ env.SharedLibrary('steppinrazor',
               LIBS=['steppinrazor_parser'],
               CPPPATH='../',
               LIBPATH='./parser/')
+
+SConscript(['asm/SConstruct', 'parser/SConstruct'])

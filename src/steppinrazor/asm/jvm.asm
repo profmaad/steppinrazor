@@ -2,7 +2,7 @@ section .data
 
 %include "opcode_table.asm"
 %include "constants_data.asm"
-;; %include "offsets.asm"
+%include "offsets.asm"
 	
 section .text
 	global run_method

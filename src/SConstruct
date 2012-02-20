@@ -8,10 +8,10 @@ env = Environment(
     LIBPATH = './steppinrazor:./steppinrazor/parser'
     )
 
-env.Program(['class_runner.c', 'steppinrazor/asm/jvm.asm'])
+env.Program(['class_runner.c', 'steppinrazor/asm/jvm.o'])
 
-env.Program(['test_runner.c', 'steppinrazor/asm/jvm.asm'])
+env.Program(['test_runner.c', 'steppinrazor/asm/jvm.o'])
 
 env.Program(['load_classfile.c'])
 
-SConscript(['steppinrazor/parser/SConstruct', 'steppinrazor/SConstruct'])
+SConscript(['steppinrazor/SConstruct'])

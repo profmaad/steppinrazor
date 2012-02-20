@@ -1,0 +1,18 @@
+import os
+
+env = Environment(
+    CC = 'clang',
+    CFLAGS = '-g -Wall',
+    AS = 'yasm',
+    ASFLAGS = '-f elf64 -g dwarf2',
+    RUBY = '/usr/bin/ruby',
+    OFFSET_GEN = '../../../tools/offset_gen.rb',
+    OFFSET_HEADERS = ' '.join(Glob('../*.h', strings=True) + Glob('../parser/*.h', strings=True))
+    )
+
+env.Command('offsets.c', env['OFFSET_GEN'], "$RUBY $SOURCE $OFFSET_HEADERS > $TARGET")
+env.Program('offsets.c', CPPPATH='../..')
+env.Command('offsets.asm', 'offsets', "./$SOURCE > $TARGET")
+
+jvm_o = env.Object('jvm.asm')
+Depends(jvm_o, 'offsets.asm')
