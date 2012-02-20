@@ -1,0 +1,15 @@
+env = Environment(
+    CC = 'clang',
+    CFLAGS='-g -Wall',
+    AS = 'yasm',
+    ASFLAGS = '-felf64 -g dwarf2',
+    LIBS = ['steppinrazor', 'steppinrazor_parser'],
+    CPPPATH = '.',
+    LIBPATH = './steppinrazor:./steppinrazor/parser'
+    )
+
+env.Program(['class_runner.c', 'steppinrazor/asm/jvm.asm'])
+
+env.Program(['test_runner.c', 'steppinrazor/asm/jvm.asm'])
+
+env.Program(['load_classfile.c'])

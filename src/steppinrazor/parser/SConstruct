@@ -1,0 +1,6 @@
+env = Environment(
+    CC = 'clang',
+    CFLAGS='-g -Wall',
+    )
+
+env.SharedLibrary('steppinrazor_parser', ['java_attribute.c', 'java_class.c', 'java_constant_pool.c', 'java_field.c', 'java_method.c', '../common/binary_helpers.c'], CPPPATH='../../')

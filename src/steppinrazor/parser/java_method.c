@@ -2,10 +2,10 @@
 # include <string.h>
 # include <errno.h>
 
-# include "binary_helpers.h"
-# include "java_attribute.h"
-# include "java_constant_pool.h"
-# include "java_method.h"
+# include <steppinrazor/common/binary_helpers.h>
+# include <steppinrazor/parser/java_attribute.h>
+# include <steppinrazor/parser/java_constant_pool.h>
+# include <steppinrazor/parser/java_method.h>
 
 bool java_method_code_exception_handler_parse(FILE *input, java_exception_handler *handler)
 {

@@ -1,7 +1,7 @@
 # include <stdlib.h>
 # include <string.h>
 
-# include "java_runtime_method.h"
+# include <steppinrazor/java_runtime_method.h>
 
 bool java_runtime_method_construct(java_runtime_method *rt_method, java_method *method)
 {

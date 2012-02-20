@@ -4,7 +4,7 @@
 # include <stdint.h>
 # include <stdbool.h>
 
-# include "java_method.h"
+# include <steppinrazor/parser/java_method.h>
 
 typedef struct java_runtime_method
 {

@@ -4,8 +4,8 @@
 # include <stdint.h>
 # include <stdbool.h>
 
-# include "java_constant_pool.h"
-# include "java_runtime_class.h"
+# include <steppinrazor/parser/java_constant_pool.h>
+# include <steppinrazor/java_runtime_class.h>
 
 struct java_runtime_class;
 

@@ -6,10 +6,10 @@
 
 # include <arpa/inet.h>
 
-# include "jvm.h"
+# include <steppinrazor/jvm.h>
 
-# include "java_class.h"
-# include "java_runtime_class.h"
+# include <steppinrazor/parser/java_class.h>
+# include <steppinrazor/java_runtime_class.h>
 
 # define MAX_RESULT_SIZE 30
 # define MAX_LINE_SIZE 100

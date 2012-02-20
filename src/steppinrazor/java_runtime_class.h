@@ -4,11 +4,11 @@
 # include <stdint.h>
 # include <stdbool.h>
 
-# include "java_class.h"
+# include <steppinrazor/parser/java_class.h>
 
-# include "java_runtime_constant_pool.h"
-# include "java_runtime_field.h"
-# include "java_runtime_method.h"
+# include <steppinrazor/java_runtime_constant_pool.h>
+# include <steppinrazor/java_runtime_field.h>
+# include <steppinrazor/java_runtime_method.h>
 
 typedef struct java_runtime_class
 {

@@ -1,7 +1,7 @@
 # include <stdlib.h>
 # include <string.h>
 
-# include "java_runtime_class.h"
+# include <steppinrazor/java_runtime_class.h>
 
 bool java_runtime_class_construct(java_runtime_class *rt_class, const java_class *class)
 {

@@ -1,8 +1,8 @@
 # include <stdio.h>
 # include <stdlib.h>
 
-# include "binary_helpers.h"
-# include "java_constant_pool.h"
+# include <steppinrazor/common/binary_helpers.h>
+# include <steppinrazor/parser/java_constant_pool.h>
 
 bool java_constant_pool_entry_utf8_parse(FILE *input, java_constant_pool_entry *entry)
 {

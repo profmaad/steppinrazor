@@ -1,0 +1,14 @@
+import os
+
+env = Environment(
+    CC = 'clang',
+    CFLAGS='-g -Wall',
+    AS = 'yasm',
+    ASFLAGS = '-f elf64 -g dwarf2',
+    )
+
+env.SharedLibrary('steppinrazor',
+              ['java_runtime_class.c', 'java_runtime_constant_pool.c', 'java_runtime_field.c', 'java_runtime_method.c', 'common/binary_helpers.c'],
+              LIBS=['steppinrazor_parser'],
+              CPPPATH='../',
+              LIBPATH='./parser/')

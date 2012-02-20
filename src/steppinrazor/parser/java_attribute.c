@@ -2,8 +2,8 @@
 # include <stdarg.h>
 # include <errno.h>
 
-# include "binary_helpers.h"
-# include "java_attribute.h"
+# include <steppinrazor/common/binary_helpers.h>
+# include <steppinrazor/parser/java_attribute.h>
 
 bool java_attribute_skip(FILE *input, bool no_index)
 {

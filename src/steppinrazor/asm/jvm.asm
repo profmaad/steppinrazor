@@ -2,7 +2,7 @@ section .data
 
 %include "opcode_table.asm"
 %include "constants_data.asm"
-%include "offsets.asm"
+;; %include "offsets.asm"
 	
 section .text
 	global run_method
@@ -60,7 +60,7 @@ run_method:
 .end:	mov rsp, rbp
 	pop rbp
 	ret
-
+	
 opcode_impl:
 
 %include "opcode_implementations/const.asm"

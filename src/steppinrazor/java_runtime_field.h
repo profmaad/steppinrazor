@@ -4,7 +4,7 @@
 # include <stdint.h>
 # include <stdbool.h>
 
-# include "java_field.h"
+# include <steppinrazor/parser/java_field.h>
 
 struct java_runtime_object;
 

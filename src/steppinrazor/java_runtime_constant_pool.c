@@ -1,7 +1,7 @@
 # include <string.h>
 # include <stdlib.h>
 
-# include "java_runtime_constant_pool.h"
+# include <steppinrazor/java_runtime_constant_pool.h>
 
 bool java_runtime_constant_pool_entry_classmember_parse(java_constant_pool_entry **cp, uint16_t index, java_runtime_constant_pool_entry *runtime_entry)
 {

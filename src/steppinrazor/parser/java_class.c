@@ -4,11 +4,11 @@
 # include <stdbool.h>
 # include <string.h>
 
-# include "binary_helpers.h"
-# include "java_class.h"
-# include "java_constant_pool.h"
-# include "java_field.h"
-# include "java_attribute.h"
+# include <steppinrazor/common/binary_helpers.h>
+# include <steppinrazor/parser/java_class.h>
+# include <steppinrazor/parser/java_constant_pool.h>
+# include <steppinrazor/parser/java_field.h>
+# include <steppinrazor/parser/java_attribute.h>
 
 # define JAVA_CLASSFILE_MAGIC_VALUE "\xCA\xFE\xBA\xBE"
 
