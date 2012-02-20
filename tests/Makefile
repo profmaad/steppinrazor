@@ -1,3 +1,6 @@
+export LD_LIBRARY_PATH := ../src/steppinrazor/parser:../src/steppinrazor
+
+
 all: run
 
 run: TestInts.class TestLongs.class TestFloats.class TestDoubles.class TestConversions.class TestComparisons.class TestGotoW.class TestSwitch.class TestLDC.class TestInts.testspec TestLongs.testspec TestFloats.testspec TestDoubles.testspec TestConversions.testspec TestComparisons.testspec TestGotoW.testspec TestSwitch.testspec TestLDC.testspec

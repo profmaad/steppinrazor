@@ -1,1 +1,1 @@
-SConscript(['src/SConstruct', 'tools/SConstruct'])
+SConscript(['src/SConstruct', 'tests/SConstruct'])
