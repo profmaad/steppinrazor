@@ -1,0 +1,10 @@
+import os
+
+env = Environment(
+    CC = 'clang',
+    CFLAGS = '-g -Wall',
+    AS = 'yasm',
+    ASFLAGS = '-f elf64 -g dwarf2',
+    )
+
+binary_helpers_o = env.SharedObject('binary_helpers.c')

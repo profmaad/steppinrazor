@@ -8,9 +8,9 @@ env = Environment(
     )
 
 env.SharedLibrary('steppinrazor',
-              ['java_runtime_class.c', 'java_runtime_constant_pool.c', 'java_runtime_field.c', 'java_runtime_method.c', 'common/binary_helpers.c'],
+              ['java_runtime_class.c', 'java_runtime_constant_pool.c', 'java_runtime_field.c', 'java_runtime_method.c', 'common/binary_helpers.os'],
               LIBS=['steppinrazor_parser'],
               CPPPATH='../',
               LIBPATH='./parser/')
 
-SConscript(['asm/SConstruct', 'parser/SConstruct'])
+SConscript(['asm/SConstruct', 'common/SConstruct', 'parser/SConstruct'])
